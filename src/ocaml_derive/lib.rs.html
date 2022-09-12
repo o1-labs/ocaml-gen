@@ -730,10 +730,26 @@
 <span id="730">730</span>
 <span id="731">731</span>
 <span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
 </pre><pre class="rust"><code><span class="attribute">#![deny(missing_docs)]
 
-</span><span class="doccomment">//! ocaml-derive adds a number of derives to make ocaml-gen easier to use.
-//! Refer to the [ocaml-gen] documentation.
+</span><span class="doccomment">//! **This crate is not meant to be imported directly by users**.
+//! You should import [ocaml-gen](https://crates.io/crates/ocaml-gen) instead.
+//!
+//! ocaml-derive adds a number of derives to make ocaml-gen easier to use.
+//! Refer to the [ocaml-gen](https://o1-labs.github.io/ocaml-gen/ocaml_gen/index.html) documentation.
 
 </span><span class="kw">extern crate </span>proc_macro;
 <span class="kw">use </span>convert_case::{Case, Casing};
@@ -760,19 +776,19 @@
 ///
 </span><span class="attribute">#[proc_macro_attribute]
 </span><span class="kw">pub fn </span>func(_attribute: TokenStream, item: TokenStream) -&gt; TokenStream {
-    <span class="kw">let </span>item_fn: syn::ItemFn = syn::parse(item).unwrap();
+    <span class="kw">let </span>item_fn: syn::ItemFn = syn::parse(item).expect(<span class="string">&quot;couldn&#39;t parse item&quot;</span>);
 
     <span class="kw">let </span>rust_name = <span class="kw-2">&amp;</span>item_fn.sig.ident;
     <span class="kw">let </span>inputs = <span class="kw-2">&amp;</span>item_fn.sig.inputs;
     <span class="kw">let </span>output = <span class="kw-2">&amp;</span>item_fn.sig.output;
 
-    <span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(rust_name.to_string());
+    <span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(<span class="kw-2">&amp;</span>rust_name.to_string());
 
     <span class="kw">let </span>inputs: Vec&lt;<span class="kw">_</span>&gt; = inputs
         .into_iter()
         .filter_map(|i| <span class="kw">match </span>i {
             FnArg::Typed(t) =&gt; <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>t.ty),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+            FnArg::Receiver(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
         })
         .collect();
 
@@ -830,9 +846,9 @@
 //
 
 </span><span class="doccomment">/// The Enum derive macro.
-/// It generates implementations of ToOCaml and OCamlBinding on an enum type.
-/// The type must implement [ocaml::IntoValue](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
-/// and [ocaml::FromValue](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
+/// It generates implementations of `ToOCaml` and `OCamlBinding` on an enum type.
+/// The type must implement [`ocaml::IntoValue`](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
+/// and [`ocaml::FromValue`](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
 /// For example:
 ///
 /// ```
@@ -992,7 +1008,7 @@
         }
     };
 
-    <span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(name_str);
+    <span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(<span class="kw-2">&amp;</span>name_str);
 
     <span class="kw">let </span>ocaml_binding = <span class="macro">quote! </span>{
         <span class="kw">fn </span>ocaml_binding(
@@ -1081,9 +1097,9 @@
 //
 
 </span><span class="doccomment">/// The Struct derive macro.
-/// It generates implementations of ToOCaml and OCamlBinding on a struct.
-/// The type must implement [ocaml::IntoValue](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
-/// and [ocaml::FromValue](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
+/// It generates implementations of `ToOCaml` and `OCamlBinding` on a struct.
+/// The type must implement [`ocaml::IntoValue`](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
+/// and [`ocaml::FromValue`](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
 ///
 /// For example:
 ///
@@ -1260,10 +1276,10 @@
                 }
             }
         }
-        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;only named, and unnamed field supported&quot;</span>),
+        Fields::Unit =&gt; <span class="macro">panic!</span>(<span class="string">&quot;only named, and unnamed field supported&quot;</span>),
     };
 
-    <span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(name_str);
+    <span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(<span class="kw-2">&amp;</span>name_str);
 
     <span class="kw">let </span>ocaml_binding = <span class="macro">quote! </span>{
         <span class="kw">fn </span>ocaml_binding(
@@ -1272,9 +1288,10 @@
             new_type: bool,
         ) -&gt; String {
             <span class="comment">// register the new type
-            </span><span class="kw">if </span>new_type {
+            </span><span class="kw">let </span>ty_id = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::unique_id();
+
+            <span class="kw">if </span>new_type {
                 <span class="kw">let </span>ty_name = rename.unwrap_or(#ocaml_name);
-                <span class="kw">let </span>ty_id = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::unique_id();
                 env.new_type(ty_id, ty_name);
             }
 
@@ -1288,7 +1305,11 @@
             <span class="kw">if </span>new_type {
                 <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, name, generics_ocaml)
             } <span class="kw">else </span>{
-                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, rename.expect(<span class="string">&quot;type alias must have a name&quot;</span>), name)
+                <span class="comment">// add the alias
+                </span><span class="kw">let </span>ty_name = rename.expect(<span class="string">&quot;bug in ocaml-gen: rename should be Some&quot;</span>);
+                env.add_alias(ty_id, ty_name);
+
+                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, ty_name, name)
             }
         }
     };
@@ -1350,7 +1371,7 @@
 // almost same code for custom types
 //
 
-</span><span class="doccomment">/// Derives implementations for OCamlDesc and OCamlBinding on a custom type
+</span><span class="doccomment">/// Derives implementations for `OCamlDesc` and `OCamlBinding` on a custom type
 /// For example:
 ///
 /// ```
@@ -1395,7 +1416,7 @@
     // ocaml_binding
     //
 
-    </span><span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(name_str);
+    </span><span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(<span class="kw-2">&amp;</span>name_str);
 
     <span class="kw">let </span>ocaml_binding = <span class="macro">quote! </span>{
         <span class="kw">fn </span>ocaml_binding(
@@ -1404,9 +1425,10 @@
             new_type: bool,
         ) -&gt; String {
             <span class="comment">// register the new type
-            </span><span class="kw">if </span>new_type {
+            </span><span class="kw">let </span>ty_id = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::unique_id();
+
+            <span class="kw">if </span>new_type {
                 <span class="kw">let </span>ty_name = rename.unwrap_or(#ocaml_name);
-                <span class="kw">let </span>ty_id = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::unique_id();
                 env.new_type(ty_id, ty_name);
             }
 
@@ -1415,7 +1437,11 @@
             <span class="kw">if </span>new_type {
                 <span class="macro">format!</span>(<span class="string">&quot;type nonrec {}&quot;</span>, name)
             } <span class="kw">else </span>{
-                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, rename.expect(<span class="string">&quot;type alias must have a name&quot;</span>), name)
+                <span class="comment">// add the alias
+                </span><span class="kw">let </span>ty_name = rename.expect(<span class="string">&quot;bug in ocaml-gen: rename should be Some&quot;</span>);
+                env.add_alias(ty_id, ty_name);
+
+                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, ty_name, name)
             }
         }
     };
@@ -1445,8 +1471,8 @@
 // helpers
 //
 
-</span><span class="doccomment">/// OCaml identifiers are snake_case, whereas Rust identifiers are CamelCase
-</span><span class="kw">fn </span>rust_ident_to_ocaml(ident: String) -&gt; String {
+</span><span class="doccomment">/// OCaml identifiers are `snake_case`, whereas Rust identifiers are CamelCase
+</span><span class="kw">fn </span>rust_ident_to_ocaml(ident: <span class="kw-2">&amp;</span>str) -&gt; String {
     ident.to_case(Case::Snake)
 }
 

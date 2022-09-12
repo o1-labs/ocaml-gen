@@ -242,6 +242,73 @@
 <span id="242">242</span>
 <span id="243">243</span>
 <span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
 </pre><pre class="rust"><code><span class="attribute">#![deny(missing_docs)]
 #![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../../README.md&quot;</span>)]
 
@@ -261,25 +328,48 @@
 </span><span class="doccomment">/// The environment at some point in time during the declaration of OCaml bindings.
 /// It ensures that types cannot be declared twice, and that types that are
 /// renamed and/or relocated into module are referenced correctly.
-</span><span class="attribute">#[derive(Default, Debug)]
+</span><span class="attribute">#[derive(Debug)]
 </span><span class="kw">pub struct </span>Env {
     <span class="doccomment">/// every type (their path and their name) is stored here at declaration
     </span>locations: HashMap&lt;u128, (Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str)&gt;,
+
     <span class="doccomment">/// the current path we&#39;re in (e.g. `ModA.ModB`)
     </span>current_module: Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+
+    <span class="doccomment">/// list of aliases. When entering a module, the vec is extended.
+    /// When exiting a module, the vec is poped.
+    /// This way, aliases are kept within their own modules.
+    </span>aliases: Vec&lt;HashMap&lt;u128, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;&gt;,
 }
 
 <span class="kw">impl </span>Drop <span class="kw">for </span>Env {
-    <span class="doccomment">/// This makes sure that we close our OCaml modules (with the keyword `end`)
+    <span class="doccomment">/// This makes sure that we close our OCaml modules (with the keyword `end`).
     </span><span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">if </span>!<span class="self">self</span>.current_module.is_empty() {
-            <span class="macro">panic!</span>(<span class="string">&quot;you must call .root() on the environment to finalize the generation. You are currently still nested: {:?}&quot;</span>, <span class="self">self</span>.current_module);
-        }
+        <span class="macro">assert!</span>(<span class="self">self</span>.current_module.is_empty(), <span class="string">&quot;you must call .root() on the environment to finalize the generation. You are currently still nested: {:?}&quot;</span>, <span class="self">self</span>.current_module);
+    }
+}
+
+<span class="kw">impl </span>Default <span class="kw">for </span>Env {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new()
     }
 }
 
 <span class="kw">impl </span>Env {
+    <span class="doccomment">/// Creates a new environment.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            locations: HashMap::new(),
+            current_module: Vec::new(),
+            aliases: <span class="macro">vec!</span>[HashMap::new()],
+        }
+    }
+
     <span class="doccomment">/// Declares a new type. If the type was already declared, this will panic.
+    ///
+    /// # Panics
+    /// The function will panic if the type was already declared.
     </span><span class="kw">pub fn </span>new_type(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ty: u128, name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) {
         <span class="kw">match </span><span class="self">self</span>.locations.entry(ty) {
             Entry::Occupied(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;ocaml-gen: cannot re-declare the same type twice&quot;</span>),
@@ -287,9 +377,24 @@
         };
     }
 
-    <span class="doccomment">/// retrieves a type that was declared previously
+    <span class="doccomment">/// Retrieves a type that was declared previously.
+    ///
+    /// # Panics
+    /// The function will panic if the type was not declared previously.
+    </span><span class="attribute">#[must_use]
     </span><span class="kw">pub fn </span>get_type(<span class="kw-2">&amp;</span><span class="self">self</span>, ty: u128, name: <span class="kw-2">&amp;</span>str) -&gt; String {
-        <span class="kw">let </span>(type_path, type_name) = <span class="self">self
+        <span class="comment">// first, check if we have an alias for this type
+        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(alias) = <span class="self">self
+            </span>.aliases
+            .last()
+            .expect(<span class="string">&quot;ocaml-gen bug: bad initialization of aliases&quot;</span>)
+            .get(<span class="kw-2">&amp;</span>ty)
+        {
+            <span class="kw">return </span>(<span class="kw-2">*</span>alias).to_string();
+        }
+
+        <span class="comment">// otherwise, check where the type is declared
+        </span><span class="kw">let </span>(type_path, type_name) = <span class="self">self
             </span>.locations
             .get(<span class="kw-2">&amp;</span>ty)
             .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;ocaml-gen: the type {} hasn&#39;t been declared&quot;</span>, name));
@@ -304,37 +409,66 @@
             .collect();
 
         <span class="kw">if </span>path.is_empty() {
-            type_name.to_string()
+            (<span class="kw-2">*</span>type_name).to_string()
         } <span class="kw">else </span>{
             <span class="macro">format!</span>(<span class="string">&quot;{}.{}&quot;</span>, path.join(<span class="string">&quot;.&quot;</span>), type_name)
         }
     }
 
-    <span class="doccomment">/// create a module and enters it
+    <span class="doccomment">/// Adds a new alias for the current scope (module).
+    ///
+    /// # Panics
+    /// The function will panic if the alias was already declared.
+    </span><span class="kw">pub fn </span>add_alias(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ty: u128, alias: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) {
+        <span class="kw">let </span>res = <span class="self">self
+            </span>.aliases
+            .last_mut()
+            .expect(<span class="string">&quot;bug in ocaml-gen: the Env initializer is broken&quot;</span>)
+            .insert(ty, alias);
+        <span class="macro">assert!</span>(
+            res.is_none(),
+            <span class="string">&quot;ocaml-gen: cannot re-declare the same alias twice&quot;
+        </span>);
+    }
+
+    <span class="doccomment">/// Create a module and enters it.
+    ///
+    /// # Panics
+    /// This function will panic if the module was already declared,
+    /// or if the module name is not following the OCaml guidelines.
     </span><span class="kw">pub fn </span>new_module(<span class="kw-2">&amp;mut </span><span class="self">self</span>, mod_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; String {
         <span class="kw">let </span>first_letter = mod_name
             .chars()
             .next()
             .expect(<span class="string">&quot;module name cannot be empty&quot;</span>);
-        <span class="kw">if </span>first_letter.to_uppercase().to_string() != first_letter.to_string() {
-            <span class="macro">panic!</span>(
-                <span class="string">&quot;ocaml-gen: OCaml module names start with an uppercase, you provided: {}&quot;</span>,
-                mod_name
-            );
-        }
+        <span class="macro">assert!</span>(
+            first_letter.to_uppercase().to_string() == first_letter.to_string(),
+            <span class="string">&quot;ocaml-gen: OCaml module names start with an uppercase, you provided: {}&quot;</span>,
+            mod_name
+        );
 
-        <span class="self">self</span>.current_module.push(mod_name);
+        <span class="comment">// nest into the aliases vector
+        </span><span class="self">self</span>.aliases.push(HashMap::new());
+
+        <span class="comment">// create a module
+        </span><span class="self">self</span>.current_module.push(mod_name);
+
         <span class="macro">format!</span>(<span class="string">&quot;module {} = struct &quot;</span>, mod_name)
     }
 
     <span class="doccomment">/// how deeply nested are we currently? (default is 0)
+    </span><span class="attribute">#[must_use]
     </span><span class="kw">pub fn </span>nested(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.current_module.len()
     }
 
-    <span class="doccomment">/// go back up one module
+    <span class="doccomment">/// called when we exit a module
     </span><span class="kw">pub fn </span>parent(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; String {
-        <span class="self">self</span>.current_module
+        <span class="comment">// destroy any aliases
+        </span><span class="self">self</span>.aliases.pop();
+
+        <span class="comment">// go back up one module
+        </span><span class="self">self</span>.current_module
             .pop()
             .expect(<span class="string">&quot;ocaml-gen: you are already at the root&quot;</span>);
         <span class="string">&quot;end&quot;</span>.to_string()
@@ -354,9 +488,9 @@
 // Traits
 //
 
-</span><span class="doccomment">/// OCamlBinding is the trait implemented by types to generate their OCaml bindings.
+</span><span class="doccomment">/// `OCamlBinding` is the trait implemented by types to generate their OCaml bindings.
 /// It is usually derived automatically via the [Struct] macro,
-/// or the [CustomType] macro for custom types.
+/// or the [`CustomType`] macro for custom types.
 /// For functions, refer to the [func] macro.
 </span><span class="kw">pub trait </span>OCamlBinding {
     <span class="doccomment">/// will generate the OCaml bindings for a type (called root type).
@@ -365,9 +499,9 @@
     </span><span class="kw">fn </span>ocaml_binding(env: <span class="kw-2">&amp;mut </span>Env, rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;, new_type: bool) -&gt; String;
 }
 
-<span class="doccomment">/// OCamlDesc is the trait implemented by types to facilitate generation of their OCaml bindings.
+<span class="doccomment">/// `OCamlDesc` is the trait implemented by types to facilitate generation of their OCaml bindings.
 /// It is usually derived automatically via the [Struct] macro,
-/// or the [CustomType] macro for custom types.
+/// or the [`CustomType`] macro for custom types.
 </span><span class="kw">pub trait </span>OCamlDesc {
     <span class="doccomment">/// describes the type in OCaml, given the current environment [Env]
     /// and the list of generic type parameters of the root type
@@ -469,7 +603,7 @@
     }};
 }
 
-<span class="doccomment">/// Creates a fake generic. This is a necessary hack, at the moment, to declare types (with the [decl_type] macro) that have generic parameters.
+<span class="doccomment">/// Creates a fake generic. This is a necessary hack, at the moment, to declare types (with the [`decl_type`] macro) that have generic parameters.
 </span><span class="attribute">#[macro_export]
 </span><span class="macro">macro_rules! </span>decl_fake_generic {
     (<span class="macro-nonterminal">$name</span>:ident, <span class="macro-nonterminal">$i</span>:expr) =&gt; {

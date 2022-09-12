@@ -1,11 +1,11 @@
 #![deny(missing_docs)]
 #![doc = include_str!("../../README.md")]
 
-extern crate ocaml_derive;
+extern crate ocaml_gen_derive;
 use std::collections::{hash_map::Entry, HashMap};
 
 pub use const_random::const_random;
-pub use ocaml_derive::*;
+pub use ocaml_gen_derive::*;
 pub use paste::paste;
 
 pub mod conv;

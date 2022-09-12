@@ -84,7 +84,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a48b45c32924a3d95aea68f628ec93737bf7cfdb7b0d14344cf3d5176caa1302"
 dependencies = [
  "ocaml-boxroot-sys",
- "ocaml-derive 0.22.0",
+ "ocaml-derive",
  "ocaml-interop",
  "ocaml-sys",
 ]
@@ -96,16 +96,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5186393bfbee4ce2bc5bbb82beafb77e85c1d0a557e3cfc8c8a0d63d7845fed5"
 dependencies = [
  "cc",
-]
-
-[[package]]
-name = "ocaml-derive"
-version = "0.1.0"
-dependencies = [
- "convert_case",
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]
@@ -126,8 +116,18 @@ version = "0.1.0"
 dependencies = [
  "const-random",
  "ocaml",
- "ocaml-derive 0.1.0",
+ "ocaml-gen-derive",
  "paste",
+]
+
+[[package]]
+name = "ocaml-gen-derive"
+version = "0.1.0"
+dependencies = [
+ "convert_case",
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]

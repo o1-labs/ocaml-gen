@@ -47,7 +47,7 @@ decl_module!(w, env, "ImportantType", {
 ## Binding description
 
 To allow the previous example to work, you must derive the correct functions on your types and functions.
-To do that, you can use the [ocaml-derive](./derive) crate.
+To do that, you can use the [ocaml-gen-derive](/ocaml-gen/derive) crate.
 
 To allow generation of bindings on structs, use [Struct]():
 
@@ -89,7 +89,7 @@ struct MyCustomType {
 ## Organization
 
 * [ocaml-gen](./ocaml-gen): the tool that allows us to generate the OCaml bindings from the Rust code.
-* [ocaml-derive](./ocaml-gen/derive): derive macros have to be a in separate crate, so they are here. This crate is re-exported by ocaml-gen so end users should not have to worry about it.
+* [ocaml-gen-derive](./ocaml-gen/derive): derive macros have to be a in separate crate, so they are here. This crate is re-exported by ocaml-gen so end users should not have to worry about it.
 * [tests/](./tests/): contains some tests. If you are looking for examples on how to use ocaml-gen, you can check that folder.
 
 ## Additional resources

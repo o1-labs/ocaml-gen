@@ -3,7 +3,7 @@
 //! **This crate is not meant to be imported directly by users**.
 //! You should import [ocaml-gen](https://crates.io/crates/ocaml-gen) instead.
 //!
-//! ocaml-derive adds a number of derives to make ocaml-gen easier to use.
+//! ocaml-gen-derive adds a number of derives to make ocaml-gen easier to use.
 //! Refer to the [ocaml-gen](https://o1-labs.github.io/ocaml-gen/ocaml_gen/index.html) documentation.
 
 extern crate proc_macro;

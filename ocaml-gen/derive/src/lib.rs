@@ -1,7 +1,10 @@
 #![deny(missing_docs)]
 
+//! **This crate is not meant to be imported directly by users**.
+//! You should import [ocaml-gen](https://crates.io/crates/ocaml-gen) instead.
+//!
 //! ocaml-derive adds a number of derives to make ocaml-gen easier to use.
-//! Refer to the [ocaml-gen] documentation.
+//! Refer to the [ocaml-gen](https://o1-labs.github.io/ocaml-gen/ocaml_gen/index.html) documentation.
 
 extern crate proc_macro;
 use convert_case::{Case, Casing};
@@ -540,9 +543,10 @@ pub fn derive_ocaml_gen(item: TokenStream) -> TokenStream {
             new_type: bool,
         ) -> String {
             // register the new type
+            let ty_id = <Self as ::ocaml_gen::OCamlDesc>::unique_id();
+
             if new_type {
                 let ty_name = rename.unwrap_or(#ocaml_name);
-                let ty_id = <Self as ::ocaml_gen::OCamlDesc>::unique_id();
                 env.new_type(ty_id, ty_name);
             }
 
@@ -556,7 +560,11 @@ pub fn derive_ocaml_gen(item: TokenStream) -> TokenStream {
             if new_type {
                 format!("type nonrec {} = {}", name, generics_ocaml)
             } else {
-                format!("type nonrec {} = {}", rename.expect("type alias must have a name"), name)
+                // add the alias
+                let ty_name = rename.expect("bug in ocaml-gen: rename should be Some");
+                env.add_alias(ty_id, ty_name);
+
+                format!("type nonrec {} = {}", ty_name, name)
             }
         }
     };
@@ -672,9 +680,10 @@ pub fn derive_ocaml_custom(item: TokenStream) -> TokenStream {
             new_type: bool,
         ) -> String {
             // register the new type
+            let ty_id = <Self as ::ocaml_gen::OCamlDesc>::unique_id();
+
             if new_type {
                 let ty_name = rename.unwrap_or(#ocaml_name);
-                let ty_id = <Self as ::ocaml_gen::OCamlDesc>::unique_id();
                 env.new_type(ty_id, ty_name);
             }
 
@@ -683,7 +692,11 @@ pub fn derive_ocaml_custom(item: TokenStream) -> TokenStream {
             if new_type {
                 format!("type nonrec {}", name)
             } else {
-                format!("type nonrec {} = {}", rename.expect("type alias must have a name"), name)
+                // add the alias
+                let ty_name = rename.expect("bug in ocaml-gen: rename should be Some");
+                env.add_alias(ty_id, ty_name);
+
+                format!("type nonrec {} = {}", ty_name, name)
             }
         }
     };

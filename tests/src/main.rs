@@ -5,7 +5,7 @@ use std::fmt::Write as _;
 
 fn main() {
     let mut w = String::new();
-    let env = &mut Env::default();
+    let env = &mut Env::new();
 
     decl_type!(w, env, SingleTuple => "single_tuple");
     decl_func!(w, env, new => "new_t");

@@ -17,16 +17,22 @@ pub mod conv;
 /// The environment at some point in time during the declaration of OCaml bindings.
 /// It ensures that types cannot be declared twice, and that types that are
 /// renamed and/or relocated into module are referenced correctly.
-#[derive(Default, Debug)]
+#[derive(Debug)]
 pub struct Env {
     /// every type (their path and their name) is stored here at declaration
     locations: HashMap<u128, (Vec<&'static str>, &'static str)>,
+
     /// the current path we're in (e.g. `ModA.ModB`)
     current_module: Vec<&'static str>,
+
+    /// list of aliases. When entering a module, the vec is extended.
+    /// When exiting a module, the vec is poped.
+    /// This way, aliases are kept within their own modules.
+    aliases: Vec<HashMap<u128, &'static str>>,
 }
 
 impl Drop for Env {
-    /// This makes sure that we close our OCaml modules (with the keyword `end`)
+    /// This makes sure that we close our OCaml modules (with the keyword `end`).
     fn drop(&mut self) {
         if !self.current_module.is_empty() {
             panic!("you must call .root() on the environment to finalize the generation. You are currently still nested: {:?}", self.current_module);
@@ -35,6 +41,15 @@ impl Drop for Env {
 }
 
 impl Env {
+    /// Creates a new environment.
+    pub fn new() -> Self {
+        Self {
+            locations: HashMap::new(),
+            current_module: Vec::new(),
+            aliases: vec![HashMap::new()],
+        }
+    }
+
     /// Declares a new type. If the type was already declared, this will panic.
     pub fn new_type(&mut self, ty: u128, name: &'static str) {
         match self.locations.entry(ty) {
@@ -45,6 +60,17 @@ impl Env {
 
     /// retrieves a type that was declared previously
     pub fn get_type(&self, ty: u128, name: &str) -> String {
+        // first, check if we have an alias for this type
+        if let Some(alias) = self
+            .aliases
+            .last()
+            .expect("ocaml-gen bug: bad initialization of aliases")
+            .get(&ty)
+        {
+            return alias.to_string();
+        }
+
+        // otherwise, check where the type is declared
         let (type_path, type_name) = self
             .locations
             .get(&ty)
@@ -66,6 +92,14 @@ impl Env {
         }
     }
 
+    /// Adds a new alias for the current scope (module)
+    pub fn add_alias(&mut self, ty: u128, alias: &'static str) {
+        let res = self.aliases.last_mut().unwrap().insert(ty, alias);
+        if !res.is_none() {
+            panic!("ocaml-gen: cannot re-declare the same alias twice");
+        }
+    }
+
     /// create a module and enters it
     pub fn new_module(&mut self, mod_name: &'static str) -> String {
         let first_letter = mod_name
@@ -79,7 +113,12 @@ impl Env {
             );
         }
 
+        // nest into the aliases vector
+        self.aliases.push(HashMap::new());
+
+        // create a module
         self.current_module.push(mod_name);
+
         format!("module {} = struct ", mod_name)
     }
 
@@ -88,8 +127,12 @@ impl Env {
         self.current_module.len()
     }
 
-    /// go back up one module
+    /// called when we exit a module
     pub fn parent(&mut self) -> String {
+        // destroy any aliases
+        self.aliases.pop();
+
+        // go back up one module
         self.current_module
             .pop()
             .expect("ocaml-gen: you are already at the root");
@@ -225,7 +268,7 @@ macro_rules! decl_type_alias {
     }};
 }
 
-/// Creates a fake generic. This is a necessary hack, at the moment, to declare types (with the [decl_type] macro) that have generic parameters.
+/// Creates a fake generic. This is a necessary hack, at the moment, to declare types (with the [`decl_type`] macro) that have generic parameters.
 #[macro_export]
 macro_rules! decl_fake_generic {
     ($name:ident, $i:expr) => {

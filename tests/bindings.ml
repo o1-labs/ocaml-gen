@@ -9,6 +9,6 @@ end
 
 module Toyota = struct 
   type nonrec t = Car.t
-  external create_toyota : unit -> Car.t = "create_toyota"
+  external create_toyota : unit -> t = "create_toyota"
 end
 

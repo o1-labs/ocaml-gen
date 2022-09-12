@@ -309,6 +309,23 @@
 <span id="309">309</span>
 <span id="310">310</span>
 <span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
 </pre><pre class="rust"><code><span class="attribute">#![deny(missing_docs)]
 #![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../../README.md&quot;</span>)]
 
@@ -320,6 +337,20 @@
 <span class="kw">pub use </span>paste::paste;
 
 <span class="kw">pub mod </span>conv;
+
+<span class="comment">//
+// User-friendly prologue
+//
+
+</span><span class="doccomment">/// To use the library, you can simply import the prelude as in:
+///
+/// ```
+/// use ocaml_gen::prelude::*;
+/// ```
+///
+</span><span class="kw">pub mod </span>prelude {
+    <span class="kw">pub use super</span>::{decl_fake_generic, decl_func, decl_module, decl_type, decl_type_alias, Env};
+}
 
 <span class="comment">//
 // Structs
@@ -378,11 +409,12 @@
     }
 
     <span class="doccomment">/// Retrieves a type that was declared previously.
+    /// A boolean indicates if the type is being aliased.
     ///
     /// # Panics
     /// The function will panic if the type was not declared previously.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>get_type(<span class="kw-2">&amp;</span><span class="self">self</span>, ty: u128, name: <span class="kw-2">&amp;</span>str) -&gt; String {
+    </span><span class="kw">pub fn </span>get_type(<span class="kw-2">&amp;</span><span class="self">self</span>, ty: u128, name: <span class="kw-2">&amp;</span>str) -&gt; (String, bool) {
         <span class="comment">// first, check if we have an alias for this type
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(alias) = <span class="self">self
             </span>.aliases
@@ -390,7 +422,7 @@
             .expect(<span class="string">&quot;ocaml-gen bug: bad initialization of aliases&quot;</span>)
             .get(<span class="kw-2">&amp;</span>ty)
         {
-            <span class="kw">return </span>(<span class="kw-2">*</span>alias).to_string();
+            <span class="kw">return </span>((<span class="kw-2">*</span>alias).to_string(), <span class="bool-val">true</span>);
         }
 
         <span class="comment">// otherwise, check where the type is declared
@@ -408,11 +440,13 @@
             .copied()
             .collect();
 
-        <span class="kw">if </span>path.is_empty() {
+        <span class="kw">let </span>name = <span class="kw">if </span>path.is_empty() {
             (<span class="kw-2">*</span>type_name).to_string()
         } <span class="kw">else </span>{
             <span class="macro">format!</span>(<span class="string">&quot;{}.{}&quot;</span>, path.join(<span class="string">&quot;.&quot;</span>), type_name)
-        }
+        };
+
+        (name, <span class="bool-val">false</span>)
     }
 
     <span class="doccomment">/// Adds a new alias for the current scope (module).

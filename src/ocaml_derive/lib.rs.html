@@ -892,10 +892,10 @@
 
             <span class="comment">// get name
             </span><span class="kw">let </span>type_id = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::unique_id();
-            <span class="kw">let </span>name = env.get_type(type_id, #name_str);
+            <span class="kw">let </span>(name, aliased) = env.get_type(type_id, #name_str);
 
             <span class="comment">// return the type description in OCaml
-            </span><span class="kw">if </span>generics_ocaml.is_empty() {
+            </span><span class="kw">if </span>generics_ocaml.is_empty() || aliased {
                 name.to_string()
             } <span class="kw">else </span>{
                 <span class="macro">format!</span>(<span class="string">&quot;({}) {}&quot;</span>, generics_ocaml.join(<span class="string">&quot;, &quot;</span>), name)
@@ -1144,10 +1144,10 @@
 
             <span class="comment">// get name
             </span><span class="kw">let </span>type_id = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::unique_id();
-            <span class="kw">let </span>name = env.get_type(type_id, #name_str);
+            <span class="kw">let </span>(name, aliased) = env.get_type(type_id, #name_str);
 
             <span class="comment">// return the type description in OCaml
-            </span><span class="kw">if </span>generics_ocaml.is_empty() {
+            </span><span class="kw">if </span>generics_ocaml.is_empty() || aliased {
                 name.to_string()
             } <span class="kw">else </span>{
                 <span class="macro">format!</span>(<span class="string">&quot;({}) {}&quot;</span>, generics_ocaml.join(<span class="string">&quot;, &quot;</span>), name)
@@ -1224,7 +1224,7 @@
                         );
                     }
                 }
-                <span class="macro">format!</span>(<span class="string">&quot;{{ {} }}&quot;</span>, generics_ocaml.join(<span class="string">&quot;; &quot;</span>))
+                <span class="macro">format!</span>(<span class="string">&quot;{{ {} }} [@@boxed]&quot;</span>, generics_ocaml.join(<span class="string">&quot;; &quot;</span>))
             }
         }
         Fields::Unnamed(fields) =&gt; {
@@ -1398,8 +1398,8 @@
     <span class="kw">let </span>ocaml_desc = <span class="macro">quote! </span>{
         <span class="kw">fn </span>ocaml_desc(env: <span class="kw-2">&amp;</span>::ocaml_gen::Env, _generics: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; String {
             <span class="kw">let </span>type_id = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::unique_id();
-            env.get_type(type_id, #name_str)
-        }
+            env.get_type(type_id, #name_str).<span class="number">0
+        </span>}
     };
 
     <span class="comment">//

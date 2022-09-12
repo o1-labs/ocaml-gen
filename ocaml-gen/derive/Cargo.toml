@@ -3,6 +3,8 @@ name = "ocaml-gen-derive"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
+description = "The inner library of ocaml-gen, for generating OCaml code"
+repository = "https://github.com/o1-labs/ocaml-gen"
 
 [lib]
 proc-macro = true

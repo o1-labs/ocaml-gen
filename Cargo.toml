@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "ocaml-gen",
+    "ocaml-gen/derive"
+]

@@ -1,4 +1,3 @@
-// TODO: get rid of nightly with https://github.com/dtolnay/paste ?
 #![deny(missing_docs)]
 #![doc = include_str!("../README.md")]
 
@@ -36,7 +35,7 @@ impl Drop for Env {
 }
 
 impl Env {
-    /// Declares a new type. If the type was already declared, this will panic. If you are declaring a custom type, use [new_custom_type].
+    /// Declares a new type. If the type was already declared, this will panic.
     pub fn new_type(&mut self, ty: u128, name: &'static str) {
         match self.locations.entry(ty) {
             Entry::Occupied(_) => panic!("ocaml-gen: cannot re-declare the same type twice"),

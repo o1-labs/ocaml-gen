@@ -30,7 +30,6 @@
   ./src/main.rs
   ; ocaml-gen
   (source_tree ../ocaml-gen))
- (mode promote)
  (action
   (progn
    (run rm -rf ./target)

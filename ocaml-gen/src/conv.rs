@@ -1,4 +1,4 @@
-//! Implementations of [crate::OCamlDesc] for types
+//! Implementations of [`crate::OCamlDesc`] for types
 //! that have natural equivalents in OCaml.
 
 use crate::{Env, OCamlDesc};

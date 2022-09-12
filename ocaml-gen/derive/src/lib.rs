@@ -31,19 +31,19 @@ use syn::{
 ///
 #[proc_macro_attribute]
 pub fn func(_attribute: TokenStream, item: TokenStream) -> TokenStream {
-    let item_fn: syn::ItemFn = syn::parse(item).unwrap();
+    let item_fn: syn::ItemFn = syn::parse(item).expect("couldn't parse item");
 
     let rust_name = &item_fn.sig.ident;
     let inputs = &item_fn.sig.inputs;
     let output = &item_fn.sig.output;
 
-    let ocaml_name = rust_ident_to_ocaml(rust_name.to_string());
+    let ocaml_name = rust_ident_to_ocaml(&rust_name.to_string());
 
     let inputs: Vec<_> = inputs
         .into_iter()
         .filter_map(|i| match i {
             FnArg::Typed(t) => Some(&t.ty),
-            _ => None,
+            FnArg::Receiver(_) => None,
         })
         .collect();
 
@@ -101,9 +101,9 @@ pub fn func(_attribute: TokenStream, item: TokenStream) -> TokenStream {
 //
 
 /// The Enum derive macro.
-/// It generates implementations of ToOCaml and OCamlBinding on an enum type.
-/// The type must implement [ocaml::IntoValue](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
-/// and [ocaml::FromValue](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
+/// It generates implementations of `ToOCaml` and `OCamlBinding` on an enum type.
+/// The type must implement [`ocaml::IntoValue`](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
+/// and [`ocaml::FromValue`](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
 /// For example:
 ///
 /// ```
@@ -263,7 +263,7 @@ pub fn derive_ocaml_enum(item: TokenStream) -> TokenStream {
         }
     };
 
-    let ocaml_name = rust_ident_to_ocaml(name_str);
+    let ocaml_name = rust_ident_to_ocaml(&name_str);
 
     let ocaml_binding = quote! {
         fn ocaml_binding(
@@ -352,9 +352,9 @@ pub fn derive_ocaml_enum(item: TokenStream) -> TokenStream {
 //
 
 /// The Struct derive macro.
-/// It generates implementations of ToOCaml and OCamlBinding on a struct.
-/// The type must implement [ocaml::IntoValue](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
-/// and [ocaml::FromValue](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
+/// It generates implementations of `ToOCaml` and `OCamlBinding` on a struct.
+/// The type must implement [`ocaml::IntoValue`](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
+/// and [`ocaml::FromValue`](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
 ///
 /// For example:
 ///
@@ -531,10 +531,10 @@ pub fn derive_ocaml_gen(item: TokenStream) -> TokenStream {
                 }
             }
         }
-        _ => panic!("only named, and unnamed field supported"),
+        Fields::Unit => panic!("only named, and unnamed field supported"),
     };
 
-    let ocaml_name = rust_ident_to_ocaml(name_str);
+    let ocaml_name = rust_ident_to_ocaml(&name_str);
 
     let ocaml_binding = quote! {
         fn ocaml_binding(
@@ -626,7 +626,7 @@ pub fn derive_ocaml_gen(item: TokenStream) -> TokenStream {
 // almost same code for custom types
 //
 
-/// Derives implementations for OCamlDesc and OCamlBinding on a custom type
+/// Derives implementations for `OCamlDesc` and `OCamlBinding` on a custom type
 /// For example:
 ///
 /// ```
@@ -671,7 +671,7 @@ pub fn derive_ocaml_custom(item: TokenStream) -> TokenStream {
     // ocaml_binding
     //
 
-    let ocaml_name = rust_ident_to_ocaml(name_str);
+    let ocaml_name = rust_ident_to_ocaml(&name_str);
 
     let ocaml_binding = quote! {
         fn ocaml_binding(
@@ -726,8 +726,8 @@ pub fn derive_ocaml_custom(item: TokenStream) -> TokenStream {
 // helpers
 //
 
-/// OCaml identifiers are snake_case, whereas Rust identifiers are CamelCase
-fn rust_ident_to_ocaml(ident: String) -> String {
+/// OCaml identifiers are `snake_case`, whereas Rust identifiers are CamelCase
+fn rust_ident_to_ocaml(ident: &str) -> String {
     ident.to_case(Case::Snake)
 }
 

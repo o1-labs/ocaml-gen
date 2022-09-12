@@ -34,14 +34,19 @@ pub struct Env {
 impl Drop for Env {
     /// This makes sure that we close our OCaml modules (with the keyword `end`).
     fn drop(&mut self) {
-        if !self.current_module.is_empty() {
-            panic!("you must call .root() on the environment to finalize the generation. You are currently still nested: {:?}", self.current_module);
-        }
+        assert!(self.current_module.is_empty(), "you must call .root() on the environment to finalize the generation. You are currently still nested: {:?}", self.current_module);
+    }
+}
+
+impl Default for Env {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
 impl Env {
     /// Creates a new environment.
+    #[must_use]
     pub fn new() -> Self {
         Self {
             locations: HashMap::new(),
@@ -51,6 +56,9 @@ impl Env {
     }
 
     /// Declares a new type. If the type was already declared, this will panic.
+    ///
+    /// # Panics
+    /// The function will panic if the type was already declared.
     pub fn new_type(&mut self, ty: u128, name: &'static str) {
         match self.locations.entry(ty) {
             Entry::Occupied(_) => panic!("ocaml-gen: cannot re-declare the same type twice"),
@@ -58,7 +66,11 @@ impl Env {
         };
     }
 
-    /// retrieves a type that was declared previously
+    /// Retrieves a type that was declared previously.
+    ///
+    /// # Panics
+    /// The function will panic if the type was not declared previously.
+    #[must_use]
     pub fn get_type(&self, ty: u128, name: &str) -> String {
         // first, check if we have an alias for this type
         if let Some(alias) = self
@@ -67,7 +79,7 @@ impl Env {
             .expect("ocaml-gen bug: bad initialization of aliases")
             .get(&ty)
         {
-            return alias.to_string();
+            return (*alias).to_string();
         }
 
         // otherwise, check where the type is declared
@@ -86,32 +98,43 @@ impl Env {
             .collect();
 
         if path.is_empty() {
-            type_name.to_string()
+            (*type_name).to_string()
         } else {
             format!("{}.{}", path.join("."), type_name)
         }
     }
 
-    /// Adds a new alias for the current scope (module)
+    /// Adds a new alias for the current scope (module).
+    ///
+    /// # Panics
+    /// The function will panic if the alias was already declared.
     pub fn add_alias(&mut self, ty: u128, alias: &'static str) {
-        let res = self.aliases.last_mut().unwrap().insert(ty, alias);
-        if !res.is_none() {
-            panic!("ocaml-gen: cannot re-declare the same alias twice");
-        }
+        let res = self
+            .aliases
+            .last_mut()
+            .expect("bug in ocaml-gen: the Env initializer is broken")
+            .insert(ty, alias);
+        assert!(
+            res.is_none(),
+            "ocaml-gen: cannot re-declare the same alias twice"
+        );
     }
 
-    /// create a module and enters it
+    /// Create a module and enters it.
+    ///
+    /// # Panics
+    /// This function will panic if the module was already declared,
+    /// or if the module name is not following the OCaml guidelines.
     pub fn new_module(&mut self, mod_name: &'static str) -> String {
         let first_letter = mod_name
             .chars()
             .next()
             .expect("module name cannot be empty");
-        if first_letter.to_uppercase().to_string() != first_letter.to_string() {
-            panic!(
-                "ocaml-gen: OCaml module names start with an uppercase, you provided: {}",
-                mod_name
-            );
-        }
+        assert!(
+            first_letter.to_uppercase().to_string() == first_letter.to_string(),
+            "ocaml-gen: OCaml module names start with an uppercase, you provided: {}",
+            mod_name
+        );
 
         // nest into the aliases vector
         self.aliases.push(HashMap::new());
@@ -123,6 +146,7 @@ impl Env {
     }
 
     /// how deeply nested are we currently? (default is 0)
+    #[must_use]
     pub fn nested(&self) -> usize {
         self.current_module.len()
     }
@@ -153,9 +177,9 @@ impl Env {
 // Traits
 //
 
-/// OCamlBinding is the trait implemented by types to generate their OCaml bindings.
+/// `OCamlBinding` is the trait implemented by types to generate their OCaml bindings.
 /// It is usually derived automatically via the [Struct] macro,
-/// or the [CustomType] macro for custom types.
+/// or the [`CustomType`] macro for custom types.
 /// For functions, refer to the [func] macro.
 pub trait OCamlBinding {
     /// will generate the OCaml bindings for a type (called root type).
@@ -164,9 +188,9 @@ pub trait OCamlBinding {
     fn ocaml_binding(env: &mut Env, rename: Option<&'static str>, new_type: bool) -> String;
 }
 
-/// OCamlDesc is the trait implemented by types to facilitate generation of their OCaml bindings.
+/// `OCamlDesc` is the trait implemented by types to facilitate generation of their OCaml bindings.
 /// It is usually derived automatically via the [Struct] macro,
-/// or the [CustomType] macro for custom types.
+/// or the [`CustomType`] macro for custom types.
 pub trait OCamlDesc {
     /// describes the type in OCaml, given the current environment [Env]
     /// and the list of generic type parameters of the root type

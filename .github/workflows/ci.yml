@@ -41,6 +41,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y opam
+          opam init -y
           opam install dune
 
       # https://nexte.st/book/pre-built-binaries.html#using-nextest-in-github-actions

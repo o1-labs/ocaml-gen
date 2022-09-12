@@ -11,6 +11,20 @@ pub use paste::paste;
 pub mod conv;
 
 //
+// User-friendly prologue
+//
+
+/// To use the library, you can simply import the prelude as in:
+///
+/// ```
+/// use ocaml_gen::prelude::*;
+/// ```
+///
+pub mod prelude {
+    pub use super::{decl_fake_generic, decl_func, decl_module, decl_type, decl_type_alias, Env};
+}
+
+//
 // Structs
 //
 
@@ -67,11 +81,12 @@ impl Env {
     }
 
     /// Retrieves a type that was declared previously.
+    /// A boolean indicates if the type is being aliased.
     ///
     /// # Panics
     /// The function will panic if the type was not declared previously.
     #[must_use]
-    pub fn get_type(&self, ty: u128, name: &str) -> String {
+    pub fn get_type(&self, ty: u128, name: &str) -> (String, bool) {
         // first, check if we have an alias for this type
         if let Some(alias) = self
             .aliases
@@ -79,7 +94,7 @@ impl Env {
             .expect("ocaml-gen bug: bad initialization of aliases")
             .get(&ty)
         {
-            return (*alias).to_string();
+            return ((*alias).to_string(), true);
         }
 
         // otherwise, check where the type is declared
@@ -97,11 +112,13 @@ impl Env {
             .copied()
             .collect();
 
-        if path.is_empty() {
+        let name = if path.is_empty() {
             (*type_name).to_string()
         } else {
             format!("{}.{}", path.join("."), type_name)
-        }
+        };
+
+        (name, false)
     }
 
     /// Adds a new alias for the current scope (module).

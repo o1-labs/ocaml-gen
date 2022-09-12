@@ -40,7 +40,7 @@ jobs:
       - name: Setup OCaml (because of ocaml-gen)
         run: |
           sudo apt update
-          sudo apt install -y ocaml
+          sudo apt install -y opam
           opam install dune
 
       # https://nexte.st/book/pre-built-binaries.html#using-nextest-in-github-actions

@@ -41,6 +41,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y ocaml
+          opam install dune
 
       # https://nexte.st/book/pre-built-binaries.html#using-nextest-in-github-actions
       - name: Install latest nextest release

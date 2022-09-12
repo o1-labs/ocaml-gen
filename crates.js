@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["ocaml_derive","ocaml_gen"];

@@ -329,11 +329,11 @@
 </pre><pre class="rust"><code><span class="attribute">#![deny(missing_docs)]
 #![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../../README.md&quot;</span>)]
 
-</span><span class="kw">extern crate </span>ocaml_derive;
+</span><span class="kw">extern crate </span>ocaml_gen_derive;
 <span class="kw">use </span>std::collections::{hash_map::Entry, HashMap};
 
 <span class="kw">pub use </span>const_random::const_random;
-<span class="kw">pub use </span>ocaml_derive::<span class="kw-2">*</span>;
+<span class="kw">pub use </span>ocaml_gen_derive::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>paste::paste;
 
 <span class="kw">pub mod </span>conv;

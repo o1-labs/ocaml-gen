@@ -40,7 +40,7 @@ Refer to the rustdoc for more information.</p>
 });</code></pre></div>
 <h3 id="binding-description"><a href="#binding-description">Binding description</a></h3>
 <p>To allow the previous example to work, you must derive the correct functions on your types and functions.
-To do that, you can use the <a href="./derive">ocaml-derive</a> crate.</p>
+To do that, you can use the <a href="/ocaml-gen/derive">ocaml-gen-derive</a> crate.</p>
 <p>To allow generation of bindings on structs, use <a href="">Struct</a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::Struct]
@@ -69,7 +69,7 @@ To do that, you can use the <a href="./derive">ocaml-derive</a> crate.</p>
 <h3 id="organization"><a href="#organization">Organization</a></h3>
 <ul>
 <li><a href="./ocaml-gen">ocaml-gen</a>: the tool that allows us to generate the OCaml bindings from the Rust code.</li>
-<li><a href="./ocaml-gen/derive">ocaml-derive</a>: derive macros have to be a in separate crate, so they are here. This crate is re-exported by ocaml-gen so end users should not have to worry about it.</li>
+<li><a href="./ocaml-gen/derive">ocaml-gen-derive</a>: derive macros have to be a in separate crate, so they are here. This crate is re-exported by ocaml-gen so end users should not have to worry about it.</li>
 <li><a href="./tests/">tests/</a>: contains some tests. If you are looking for examples on how to use ocaml-gen, you can check that folder.</li>
 </ul>
 <h3 id="additional-resources"><a href="#additional-resources">Additional resources</a></h3>

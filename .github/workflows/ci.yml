@@ -81,6 +81,7 @@ jobs:
       
       - name: Build and run tests
         run: |
+          eval $(opam env)
           dune build
 
       - name: Check that up-to-date bindings are checked in

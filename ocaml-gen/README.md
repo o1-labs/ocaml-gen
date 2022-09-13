@@ -44,12 +44,32 @@ decl_module!(w, env, "ImportantType", {
 });
 ```
 
+which should generate OCaml bindings that looks like this:
+
+```ocaml
+module Types = struct
+  type nonrec some_type
+
+  type nonrec 'generic_name some_generic_type
+
+  type nonrec 'stuff thing
+end
+
+module ImportantType = struct
+  type nonrec t
+
+  val of_numeral : int -> t
+end
+```
+
+Note that you can create type aliases with the [`decl_type_alias!`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html) macro but it is not recommended as it will rename different instantiation of the same generic type to the same alias. See [this tracking issue](https://github.com/o1-labs/ocaml-gen/issues/4).
+
 ## Binding description
 
 To allow the previous example to work, you must derive the correct functions on your types and functions.
 To do that, you can use the [ocaml-gen-derive](/ocaml-gen/derive) crate.
 
-To allow generation of bindings on structs, use [Struct]():
+To allow generation of bindings on structs, use [`ocaml_gen::Struct`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.Struct.html):
 
 ```rust
 #[ocaml_gen::Struct]
@@ -58,7 +78,7 @@ struct MyType {
 }
 ```
 
-To allow generation of bindings on enums, use [ocaml_gen::Enum]():
+To allow generation of bindings on enums, use [`ocaml_gen::Enum`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.Enum.html):
 
 ```rust
 #[ocaml_gen::Enum]
@@ -67,7 +87,7 @@ enum MyType {
 }
 ```
 
-To allow generation of bindings on functions, use [ocaml_gen::func]():
+To allow generation of bindings on functions, use [`ocaml_gen::func`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/attr.func.html):
 
 ```rust
 #[ocaml_gen::func]
@@ -77,7 +97,7 @@ pub fn your_function(arg1: String) {
 }
 ```
 
-To allow generation of bindings on custom types, use [ocaml_gen::CustomType]():
+To allow generation of bindings on custom types, use [`ocaml_gen::CustomType`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.CustomType.html):
 
 ```rust
 #[ocaml_gen::CustomType]

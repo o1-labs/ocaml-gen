@@ -38,29 +38,44 @@ Refer to the rustdoc for more information.</p>
     // or you have to import `caml_of_numeral_to_ocaml`
     </span><span class="macro">decl_func!</span>(w, env, caml_of_numeral =&gt; <span class="string">&quot;of_numeral&quot;</span>);
 });</code></pre></div>
+<p>which should generate OCaml bindings that looks like this:</p>
+<div class="example-wrap"><pre class="language-ocaml"><code>module Types = struct
+  type nonrec some_type
+
+  type nonrec &#39;generic_name some_generic_type
+
+  type nonrec &#39;stuff thing
+end
+
+module ImportantType = struct
+  type nonrec t
+
+  val of_numeral : int -&gt; t
+end</code></pre></div>
+<p>Note that you can create type aliases with the <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html"><code>decl_type_alias!</code></a> macro but it is not recommended as it will rename different instantiation of the same generic type to the same alias. See <a href="https://github.com/o1-labs/ocaml-gen/issues/4">this tracking issue</a>.</p>
 <h3 id="binding-description"><a href="#binding-description">Binding description</a></h3>
 <p>To allow the previous example to work, you must derive the correct functions on your types and functions.
 To do that, you can use the <a href="/ocaml-gen/derive">ocaml-gen-derive</a> crate.</p>
-<p>To allow generation of bindings on structs, use <a href="">Struct</a>:</p>
+<p>To allow generation of bindings on structs, use <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.Struct.html"><code>ocaml_gen::Struct</code></a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::Struct]
 </span><span class="kw">struct </span>MyType {
   <span class="comment">// ...
 </span>}</code></pre></div>
-<p>To allow generation of bindings on enums, use <a href="">ocaml_gen::Enum</a>:</p>
+<p>To allow generation of bindings on enums, use <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.Enum.html"><code>ocaml_gen::Enum</code></a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::Enum]
 </span><span class="kw">enum </span>MyType {
   <span class="comment">// ...
 </span>}</code></pre></div>
-<p>To allow generation of bindings on functions, use <a href="">ocaml_gen::func</a>:</p>
+<p>To allow generation of bindings on functions, use <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/attr.func.html"><code>ocaml_gen::func</code></a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::func]
 #[ocaml::func] </span><span class="comment">// if you use the crate ocaml-rs&#39; macro, it must appear after
 </span><span class="kw">pub fn </span>your_function(arg1: String) {
   <span class="comment">//...
 </span>}</code></pre></div>
-<p>To allow generation of bindings on custom types, use <a href="">ocaml_gen::CustomType</a>:</p>
+<p>To allow generation of bindings on custom types, use <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.CustomType.html"><code>ocaml_gen::CustomType</code></a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::CustomType]
 </span><span class="kw">struct </span>MyCustomType {
@@ -105,4 +120,4 @@ For example:</p>
 It generates implementations of <code>ToOCaml</code> and <code>OCamlBinding</code> on a struct.
 The type must implement <a href="https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html"><code>ocaml::IntoValue</code></a>
 and <a href="https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html"><code>ocaml::FromValue</code></a></p>
-</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="ocaml_gen" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (59e7a308e 2022-09-11)" ></div></body></html>
+</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="ocaml_gen" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (fa6ee9375 2022-09-12)" ></div></body></html>

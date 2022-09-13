@@ -43,6 +43,7 @@ jobs:
           sudo apt install -y opam
           opam init -y
           opam install dune
+          eval $(opam env)
 
       # https://nexte.st/book/pre-built-binaries.html#using-nextest-in-github-actions
       - name: Install latest nextest release

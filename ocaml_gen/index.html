@@ -1,100 +1,127 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="OCaml-gen"><meta name="keywords" content="rust, rustlang, rust-lang, ocaml_gen"><title>ocaml_gen - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../normalize.css"><link rel="stylesheet" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../ayu.css" disabled><link rel="stylesheet" href="../dark.css" disabled><link rel="stylesheet" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="../crates.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../ocaml_gen/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../ocaml_gen/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Crate ocaml_gen</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 0.1.0</li><li><a id="all-types" href="all.html">All Items</a></li></ul></div><section><div class="block"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#attributes">Attribute Macros</a></li><li><a href="#derives">Derive Macros</a></li></ul></div></section></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../ocaml_gen/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">ocaml_gen</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/ocaml_gen/lib.rs.html#1-328">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="ocaml-gen"><a href="#ocaml-gen">OCaml-gen</a></h2>
 <p>This crate provides automatic generation of OCaml bindings.
 Refer to the rustdoc for more information.</p>
-<h3 id="binding-generation"><a href="#binding-generation">Binding generation</a></h3>
-<p>Here’s an example of generating some bindings:</p>
+<h3 id="example"><a href="#example">Example</a></h3>
+<p>Here’s an example of generating some bindings. Create a <code>main.rs</code> as:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="comment">// initialize your environment
-</span><span class="kw">let </span>env = <span class="kw-2">&amp;mut </span>Env::default();
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ocaml_gen::prelude::<span class="kw-2">*</span>;
 
-<span class="comment">// choose where you want to write the bindings
-</span><span class="kw">let </span>w = <span class="kw-2">&amp;mut </span>std::io::stdout();
+<span class="comment">// Some Rust code you have:
 
-<span class="comment">// we need to create fake generic placeholders for generic structs
-</span><span class="macro">decl_fake_generic!</span>(T1, <span class="number">0</span>);
-<span class="macro">decl_fake_generic!</span>(T2, <span class="number">1</span>);
+</span><span class="attribute">#[derive(ocaml::FromValue, ocaml::IntoValue, ocaml_gen::CustomType)]
+</span><span class="kw">pub struct </span>SomeType {
+  <span class="kw">pub </span>a: u8,
+}
 
-<span class="comment">// you can declare modules
-</span><span class="macro">decl_module!</span>(w, env, <span class="string">&quot;Types&quot;</span>, {
-    
-    <span class="comment">// and types
-    </span><span class="macro">decl_type!</span>(w, env, SomeType);
+<span class="attribute">#[ocaml_gen::func]
+#[ocaml::func]
+</span><span class="kw">fn </span>create_some_type() -&gt; SomeType {
+  SomeType { a: <span class="number">42 </span>}
+}
 
-    <span class="comment">// and even generic types
-    </span><span class="macro">decl_type!</span>(w, env, SomeGenericType::&lt;T1&gt;);
+<span class="kw">fn </span>main() {
+  <span class="comment">// initialize your environment
+  </span><span class="kw">let </span>env = <span class="kw-2">&amp;mut </span>Env::default();
 
-    <span class="comment">// you can also rename a type
-    </span><span class="macro">decl_type!</span>(w, env, SomeOtherGenericType::&lt;T1&gt; =&gt; <span class="string">&quot;thing&quot;</span>);
-});
+  <span class="comment">// choose where you want to write the bindings
+  </span><span class="kw">let </span>w = <span class="kw-2">&amp;mut </span>std::io::stdout();
 
-<span class="macro">decl_module!</span>(w, env, <span class="string">&quot;ImportantType&quot;</span>, {
+  <span class="comment">// you can declare modules
+  </span><span class="macro">decl_module!</span>(w, env, <span class="string">&quot;Types&quot;</span>, {    
+      <span class="comment">// and types
+      </span><span class="macro">decl_type!</span>(w, env, SomeType =&gt; <span class="string">&quot;t&quot;</span>);
+  });
 
-    <span class="comment">// the OCaml way is often to rename your module&#39;s main type as `t`
-    </span><span class="macro">decl_type!</span>(w, env, CamlBigInteger256 =&gt; <span class="string">&quot;t&quot;</span>);
-
-    <span class="comment">// you can declare functions as well
-    // note that the underlying function calls `caml_of_numeral_to_ocaml`
-    // so you have to either import all (e.g. `use path::*`)
-    // or you have to import `caml_of_numeral_to_ocaml`
-    </span><span class="macro">decl_func!</span>(w, env, caml_of_numeral =&gt; <span class="string">&quot;of_numeral&quot;</span>);
-});</code></pre></div>
-<p>which should generate OCaml bindings that looks like this:</p>
-<div class="example-wrap"><pre class="language-ocaml"><code>module Types = struct
-  type nonrec some_type
-
-  type nonrec &#39;generic_name some_generic_type
-
-  type nonrec &#39;stuff thing
+  <span class="macro">decl_module!</span>(w, env, <span class="string">&quot;Functions&quot;</span>, {
+      <span class="comment">// and functions
+      </span><span class="macro">decl_func!</span>(w, env, create_some_type =&gt; <span class="string">&quot;create&quot;</span>);
+  });
+}</code></pre></div>
+<p>Note that the underlying function imported by <code>decl_func!</code> is actually <code>caml_of_numeral_to_ocaml</code>, which is created by the annotated macro <code>ocaml_gen::func</code>. 
+So either your function is in scope, or you import everything (e.g. <code>use path::*</code>), or you import the derived function directly (e.g. <code>use path::caml_of_numeral_to_ocaml</code>).</p>
+<p>The OCaml bindings generated should look like this:</p>
+<div class="example-wrap"><pre class="language-ocaml,ignore"><code>module Types = struct
+  type nonrec t
 end
 
-module ImportantType = struct
-  type nonrec t
-
-  val of_numeral : int -&gt; t
-end</code></pre></div>
-<p>Note that you can create type aliases with the <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html"><code>decl_type_alias!</code></a> macro but it is <strong>highly experimental</strong>.
-It has a number of issues: </p>
-<ul>
-<li>the alias doesn’t work outside of the module it is declared current scope (which is usually what you want)</li>
-<li>the alias is ignoring the instantiation of type parameters. This means that it might rename <code>Thing&lt;usize&gt;</code> to <code>t1</code>, eventhough <code>t1</code> was an alias to <code>Thing&lt;String&gt;</code> (this is the main danger, see <a href="https://github.com/o1-labs/ocaml-gen/issues/4">this tracking issue</a>)</li>
-<li>it won’t work (binding generation will throw an error) if you try to alias two instantiations of the same generic type (for example, <code>t1</code> is the alias of <code>Thing&lt;usize&gt;</code> and <code>t2</code> is the alias of <code>Thing&lt;String&gt;</code>)</li>
-</ul>
-<h3 id="binding-description"><a href="#binding-description">Binding description</a></h3>
-<p>To allow the previous example to work, you must derive the correct functions on your types and functions.
-To do that, you can use the <a href="/ocaml-gen/derive">ocaml-gen-derive</a> crate.</p>
+module Functions = struct
+  val create : unit -&gt; Types.t
+end</code></pre></div><h3 id="usage"><a href="#usage">Usage</a></h3>
+<p>In general, you can use this library by following these steps:</p>
+<ol>
+<li>annotate your types and functions with <a href="https://github.com/zshipko/ocaml-rs"><code>ocaml-rs</code></a> and <code>ocaml_gen</code> macros.</li>
+<li>create a <code>main.rs</code> file to generate your binding file <code>bindings.ml</code> as shown above.</li>
+<li>use the <a href="https://github.com/zshipko/ocaml-rs"><code>ocaml-rs</code></a> crate to export the static library that OCaml will use.</li>
+<li>add a <code>dune</code> file to your crate to build the Rust static library as well as the OCaml bindings. (protip: use <code>(mode promote)</code> in the dune file to have the resulting binding file live within the folder.)</li>
+<li>optionally enforce in CI that the promoted binding file is correct.</li>
+</ol>
+<p>You can see an example of these steps in the <a href="test/">test/</a> folder. (Although we don’t “promote” the file with dune for testing purposes.)</p>
+<h4 id="annotations"><a href="#annotations">Annotations</a></h4>
+<p>To allow ocaml-gen to understand how to generate OCaml bindings from your types and functions, you must annotate them using ocaml-gen’s macros. </p>
 <p>To allow generation of bindings on structs, use <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.Struct.html"><code>ocaml_gen::Struct</code></a>:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::Struct]
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::Struct]
 </span><span class="kw">struct </span>MyType {
   <span class="comment">// ...
 </span>}</code></pre></div>
 <p>To allow generation of bindings on enums, use <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.Enum.html"><code>ocaml_gen::Enum</code></a>:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::Enum]
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::Enum]
 </span><span class="kw">enum </span>MyType {
   <span class="comment">// ...
 </span>}</code></pre></div>
 <p>To allow generation of bindings on functions, use <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/attr.func.html"><code>ocaml_gen::func</code></a>:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::func]
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::func]
 #[ocaml::func] </span><span class="comment">// if you use the crate ocaml-rs&#39; macro, it must appear after
 </span><span class="kw">pub fn </span>your_function(arg1: String) {
   <span class="comment">//...
 </span>}</code></pre></div>
 <p>To allow generation of bindings on custom types, use <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.CustomType.html"><code>ocaml_gen::CustomType</code></a>:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::CustomType]
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="attribute">#[ocaml_gen::CustomType]
 </span><span class="kw">struct </span>MyCustomType {
   <span class="comment">// ...
 </span>}</code></pre></div>
-<h3 id="organization"><a href="#organization">Organization</a></h3>
+<h4 id="binding-generations"><a href="#binding-generations">Binding generations</a></h4>
+<p>To generate bindings, you must create a <code>main.rs</code> file that uses the <code>ocaml_gen</code> crate functions to layout what the bindings <code>.ml</code> file will look like.
+The first thing to do is to import the types and functions you want to generate bindings for, as well as the <code>ocaml_gen</code> macros:</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ocaml_gen::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>your_crate::<span class="kw-2">*</span>;</code></pre></div>
+<p>You can then use <code>decl_module!</code> to declare modules:</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code>  <span class="kw">let </span>env = <span class="kw-2">&amp;mut </span>Env::default();
+  <span class="kw">let </span>w = <span class="kw-2">&amp;mut </span>std::io::stdout();
+
+  <span class="macro">decl_module!</span>(w, env, <span class="string">&quot;T1&quot;</span>, {   
+      <span class="macro">decl_module!</span>(w, env, <span class="string">&quot;T2&quot;</span>, {   
+        <span class="macro">decl_type!</span>(w, env, SomeType);
+      });
+  });
+
+  <span class="macro">decl_module!</span>(w, env, <span class="string">&quot;T3&quot;</span>, {
+    <span class="macro">decl_type!</span>(w, env, SomeOtherType);
+  });</code></pre></div>
+<p>You can rename types and functions by simply adding an arrow:</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="macro">decl_type!</span>(w, env, SomeType =&gt; <span class="string">&quot;t&quot;</span>);</code></pre></div>
+<p>You can also declare generic types by first declaring the generic type parameters (that you must reuse for all generic types):</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="macro">decl_fake_generic!</span>(T1, <span class="number">0</span>); <span class="comment">// danger:
+</span><span class="macro">decl_fake_generic!</span>(T2, <span class="number">1</span>); <span class="comment">// make sure you
+</span><span class="macro">decl_fake_generic!</span>(T3, <span class="number">2</span>); <span class="comment">// increment these correctly
+
+</span><span class="macro">decl_type!</span>(w, env, TypeWithOneGenericType&lt;T1&gt;);
+<span class="macro">decl_type!</span>(w, env, ThisOneHasTwo&lt;T1, T2&gt;);
+<span class="macro">decl_type!</span>(w, env, ThisOneHasThreeOfThem&lt;T1, T2, T3&gt;);</code></pre></div>
+<p>You can also create type aliases with the <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html"><code>decl_type_alias!</code></a> macro but it is <strong>highly experimental</strong>.
+It has a number of issues: </p>
 <ul>
-<li><a href="./ocaml-gen">ocaml-gen</a>: the tool that allows us to generate the OCaml bindings from the Rust code.</li>
-<li><a href="./ocaml-gen/derive">ocaml-gen-derive</a>: derive macros have to be a in separate crate, so they are here. This crate is re-exported by ocaml-gen so end users should not have to worry about it.</li>
-<li><a href="./tests/">tests/</a>: contains some tests. If you are looking for examples on how to use ocaml-gen, you can check that folder.</li>
+<li>the alias doesn’t work outside of the module it is declared current scope (which is usually what you want)</li>
+<li>the alias is ignoring the instantiation of type parameters. This means that it might rename <code>Thing&lt;usize&gt;</code> to <code>t1</code>, eventhough <code>t1</code> was an alias to <code>Thing&lt;String&gt;</code> (this is the main danger, see <a href="https://github.com/o1-labs/ocaml-gen/issues/4">this tracking issue</a>)</li>
+<li>it won’t work (binding generation will throw an error) if you try to alias two instantiations of the same generic type (for example, <code>t1</code> is the alias of <code>Thing&lt;usize&gt;</code> and <code>t2</code> is the alias of <code>Thing&lt;String&gt;</code>)</li>
 </ul>
-<h3 id="additional-resources"><a href="#additional-resources">Additional resources</a></h3>
-<p>you can check the <a href="https://www.youtube.com/watch?v=LuXo2cNkgyA&amp;feature=youtu.be">recording</a> I made when I first introduced the tool internally.</p>
 </div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="conv/index.html" title="ocaml_gen::conv mod">conv</a></div><div class="item-right docblock-short"><p>Implementations of <a href="trait.OCamlDesc.html" title="crate::OCamlDesc"><code>crate::OCamlDesc</code></a> for types
 that have natural equivalents in OCaml.</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="prelude/index.html" title="ocaml_gen::prelude mod">prelude</a></div><div class="item-right docblock-short"><p>To use the library, you can simply import the prelude as in:</p>

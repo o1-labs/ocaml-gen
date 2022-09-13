@@ -10,3 +10,13 @@ This Rust library allows you to automatically generate OCaml bindings for your R
 
 See the [ocaml-gen/ README](/ocaml-gen) for more information.
 
+
+## Organization
+
+* [ocaml-gen](ocaml-gen): the tool that allows us to generate the OCaml bindings from the Rust code.
+* [ocaml-gen-derive](ocaml-gen/derive): derive macros have to be a in separate crate, so they are here. This crate is re-exported by ocaml-gen so end users should not have to worry about it.
+* [tests/](tests/): contains some tests. If you are looking for examples on how to use ocaml-gen, you can check that folder.
+
+## Additional resources
+
+you can check the [recording](https://www.youtube.com/watch?v=LuXo2cNkgyA&feature=youtu.be) I made when I first introduced the tool internally.

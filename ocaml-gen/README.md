@@ -62,7 +62,12 @@ module ImportantType = struct
 end
 ```
 
-Note that you can create type aliases with the [`decl_type_alias!`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html) macro but it is not recommended as it will rename different instantiation of the same generic type to the same alias. See [this tracking issue](https://github.com/o1-labs/ocaml-gen/issues/4).
+Note that you can create type aliases with the [`decl_type_alias!`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html) macro but it is **highly experimental**.
+It has a number of issues: 
+
+* the alias doesn't work outside of the module it is declared current scope (which is usually what you want)
+* the alias is ignoring the instantiation of type parameters. This means that it might rename `Thing<usize>` to `t1`, eventhough `t1` was an alias to `Thing<String>` (this is the main danger, see [this tracking issue](https://github.com/o1-labs/ocaml-gen/issues/4))
+* it won't work (binding generation will throw an error) if you try to alias two instantiations of the same generic type (for example, `t1` is the alias of `Thing<usize>` and `t2` is the alias of `Thing<String>`)
 
 ## Binding description
 

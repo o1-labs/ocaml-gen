@@ -32,7 +32,7 @@ fn main() {
     });
 
     // read bindings.ml content
-    let bindings = include_str!("../bindings.ml");
+    let bindings = include_str!("../expected_bindings.ml");
     if bindings != w {
         eprintln!("the tests compiled as a different bindings file.");
         eprintln!("what was expected:");

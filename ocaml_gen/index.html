@@ -52,7 +52,13 @@ module ImportantType = struct
 
   val of_numeral : int -&gt; t
 end</code></pre></div>
-<p>Note that you can create type aliases with the <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html"><code>decl_type_alias!</code></a> macro but it is not recommended as it will rename different instantiation of the same generic type to the same alias. See <a href="https://github.com/o1-labs/ocaml-gen/issues/4">this tracking issue</a>.</p>
+<p>Note that you can create type aliases with the <a href="https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html"><code>decl_type_alias!</code></a> macro but it is <strong>highly experimental</strong>.
+It has a number of issues: </p>
+<ul>
+<li>the alias doesn’t work outside of the module it is declared current scope (which is usually what you want)</li>
+<li>the alias is ignoring the instantiation of type parameters. This means that it might rename <code>Thing&lt;usize&gt;</code> to <code>t1</code>, eventhough <code>t1</code> was an alias to <code>Thing&lt;String&gt;</code> (this is the main danger, see <a href="https://github.com/o1-labs/ocaml-gen/issues/4">this tracking issue</a>)</li>
+<li>it won’t work (binding generation will throw an error) if you try to alias two instantiations of the same generic type (for example, <code>t1</code> is the alias of <code>Thing&lt;usize&gt;</code> and <code>t2</code> is the alias of <code>Thing&lt;String&gt;</code>)</li>
+</ul>
 <h3 id="binding-description"><a href="#binding-description">Binding description</a></h3>
 <p>To allow the previous example to work, you must derive the correct functions on your types and functions.
 To do that, you can use the <a href="/ocaml-gen/derive">ocaml-gen-derive</a> crate.</p>

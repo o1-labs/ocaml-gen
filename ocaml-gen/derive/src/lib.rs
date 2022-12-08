@@ -479,7 +479,16 @@ pub fn derive_ocaml_gen(item: TokenStream) -> TokenStream {
                         );
                     }
                 }
-                format!("{{ {} }} [@@boxed]", generics_ocaml.join("; "))
+
+                // See https://v2.ocaml.org/manual/attributes.html for boxing/unboxing
+                if generics_ocaml.len() == 1 {
+                    // Tell the OCaml compiler to not unbox records of size 1
+                    format!("{{ {} }} [@@boxed]", generics_ocaml[0])
+                } else {
+                    // OCaml does not unbox records with 2+ fields, so the annotation is unnecessary
+                    format!("{{ {} }}", generics_ocaml.join("; "))
+                }
+
             }
         }
         Fields::Unnamed(fields) => {

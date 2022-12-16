@@ -14,6 +14,19 @@ impl OCamlDesc for () {
     }
 }
 
+impl<T> OCamlDesc for &T
+where
+    T: OCamlDesc,
+{
+    fn ocaml_desc(env: &Env, generics: &[&str]) -> String {
+        T::ocaml_desc(env, generics)
+    }
+
+    fn unique_id() -> u128 {
+        T::unique_id()
+    }
+}
+
 impl OCamlDesc for [u8; 32] {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "bytes".to_string()

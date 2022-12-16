@@ -83,6 +83,16 @@ where
     }
 }
 
+impl OCamlDesc for usize {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "int".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
 impl OCamlDesc for ocaml::Int {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "int".to_string()

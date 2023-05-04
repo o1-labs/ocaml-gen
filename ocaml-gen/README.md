@@ -31,7 +31,7 @@ fn main() {
   let w = &mut std::io::stdout();
 
   // you can declare modules
-  decl_module!(w, env, "Types", {    
+  decl_module!(w, env, "Types", {
       // and types
       decl_type!(w, env, SomeType => "t");
   });
@@ -43,7 +43,7 @@ fn main() {
 }
 ```
 
-Note that the underlying function imported by `decl_func!` is actually `caml_of_numeral_to_ocaml`, which is created by the annotated macro `ocaml_gen::func`. 
+Note that the underlying function imported by `decl_func!` is actually `caml_of_numeral_to_ocaml`, which is created by the annotated macro `ocaml_gen::func`.
 So either your function is in scope, or you import everything (e.g. `use path::*`), or you import the derived function directly (e.g. `use path::caml_of_numeral_to_ocaml`).
 
 The OCaml bindings generated should look like this:
@@ -72,7 +72,7 @@ You can see an example of these steps in the [test/](test/) folder. (Although we
 
 ### Annotations
 
-To allow ocaml-gen to understand how to generate OCaml bindings from your types and functions, you must annotate them using ocaml-gen's macros. 
+To allow ocaml-gen to understand how to generate OCaml bindings from your types and functions, you must annotate them using ocaml-gen's macros.
 
 To allow generation of bindings on structs, use [`ocaml_gen::Struct`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/derive.Struct.html):
 
@@ -127,8 +127,8 @@ You can then use `decl_module!` to declare modules:
   let env = &mut Env::default();
   let w = &mut std::io::stdout();
 
-  decl_module!(w, env, "T1", {   
-      decl_module!(w, env, "T2", {   
+  decl_module!(w, env, "T1", {
+      decl_module!(w, env, "T2", {
         decl_type!(w, env, SomeType);
       });
   });
@@ -157,7 +157,7 @@ decl_type!(w, env, ThisOneHasThreeOfThem<T1, T2, T3>);
 ```
 
 You can also create type aliases with the [`decl_type_alias!`](https://o1-labs.github.io/ocaml-gen/ocaml_gen/macro.decl_type_alias.html) macro but it is **highly experimental**.
-It has a number of issues: 
+It has a number of issues:
 
 * the alias doesn't work outside of the module it is declared current scope (which is usually what you want)
 * the alias is ignoring the instantiation of type parameters. This means that it might rename `Thing<usize>` to `t1`, eventhough `t1` was an alias to `Thing<String>` (this is the main danger, see [this tracking issue](https://github.com/o1-labs/ocaml-gen/issues/4))

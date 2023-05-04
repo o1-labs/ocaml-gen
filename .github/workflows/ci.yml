@@ -16,6 +16,10 @@ env:
 
 jobs:
   run_checks:
+    strategy:
+      matrix:
+        compiler_version: [1.67]
+
     runs-on: ubuntu-latest
     name: Run some basic checks and tests
     steps:
@@ -30,7 +34,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: "1.63.0"
+          toolchain: ${{ matrix.compiler_version }}
           components: rustfmt, clippy
 
       # https://github.com/Swatinem/rust-cache
@@ -51,11 +55,11 @@ jobs:
 
       #
       # Tests
-      # 
+      #
 
       - name: Test with latest nextest release (faster than cargo test)
         uses: actions-rs/cargo@v1
-        with:            
+        with:
           command: nextest
           args: run --all-features --release
 
@@ -76,9 +80,9 @@ jobs:
           args: --all-features -- -D warnings
 
       #
-      # Ocaml (tests)
+      # OCaml (tests)
       #
-      
+
       - name: Build and run tests
         run: |
           eval $(opam env)

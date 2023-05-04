@@ -46,7 +46,7 @@
  (modules lib bindings)
  ; Link the Rust library
  (foreign_archives ocamlgen_test_stubs)
- (c_library_flags :standard "-lpthread"))
+ (c_library_flags :standard))
 
 ;; test executable (links to the library)
 

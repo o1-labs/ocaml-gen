@@ -10,6 +10,12 @@ This Rust library allows you to automatically generate OCaml bindings for your R
 
 See the [ocaml-gen/ README](/ocaml-gen) for more information.
 
+## Setup development environment
+
+```
+opam switch create ./ 4.14.0
+opam install merlin ocamlformat.$(awk -F = '$1 == "version" {print $2}' .ocamlformat)
+```
 
 ## Organization
 

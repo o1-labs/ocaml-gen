@@ -2,5 +2,6 @@
 
 members = [
     "ocaml-gen",
-    "ocaml-gen/derive"
+    "ocaml-gen/derive",
+    "tests/ocamlgen_test_stubs"
 ]

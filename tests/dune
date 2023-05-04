@@ -35,8 +35,7 @@
  (name ocamlgen_test_lib)
  (public_name ocamlgen-test)
  (modules lib bindings)
- (foreign_archives ocamlgen_test_stubs)
- (c_library_flags :standard -lpthread))
+ (foreign_archives ocamlgen_test_stubs))
 
 ;; test executable (links to the library)
 

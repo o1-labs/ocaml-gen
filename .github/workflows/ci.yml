@@ -19,6 +19,8 @@ jobs:
     strategy:
       matrix:
         rust_toolchain_version: [1.67, 1.68, 1.69]
+        # Follow ocamlgen-test.opam requirements
+        ocaml_version: [4.12, 4.13, 4.14, 5.0.0]
 
     runs-on: ubuntu-latest
     name: Run some basic checks and tests
@@ -41,13 +43,12 @@ jobs:
       - name: Cache Rust stuff
         uses: Swatinem/rust-cache@v1
 
-      - name: Setup OCaml (because of ocaml-gen)
-        run: |
-          sudo apt update
-          sudo apt install -y opam
-          opam init -y
-          opam install dune
-          eval $(opam env)
+      - name: Setup OCaml ${{ matrix.ocaml_version }} (because of ocaml-gen)
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml_version }}
+          # https://github.com/ocaml/setup-ocaml/issues/211#issuecomment-1058882386
+          # disable-cache: true
 
       # https://nexte.st/book/pre-built-binaries.html#using-nextest-in-github-actions
       - name: Install latest nextest release

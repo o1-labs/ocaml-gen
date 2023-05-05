@@ -35,9 +35,10 @@ jobs:
       - name: Set up cargo/rust ${{ matrix.rust_toolchain_version }}
         uses: actions-rs/toolchain@v1
         with:
-          profile: minimal
+          # Using default to get rust-docs, rustfmt and clippy
+          # Doc: https://rust-lang.github.io/rustup/concepts/profiles.html
+          profile: default
           toolchain: ${{ matrix.rust_toolchain_version }}
-          components: rustfmt, clippy
 
       - name: Setup OCaml ${{ matrix.ocaml_version }} (because of ocaml-gen)
         uses: ocaml/setup-ocaml@v2

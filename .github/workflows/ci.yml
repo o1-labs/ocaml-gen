@@ -39,10 +39,6 @@ jobs:
           toolchain: ${{ matrix.rust_toolchain_version }}
           components: rustfmt, clippy
 
-      # https://github.com/Swatinem/rust-cache
-      - name: Cache Rust stuff
-        uses: Swatinem/rust-cache@v1
-
       - name: Setup OCaml ${{ matrix.ocaml_version }} (because of ocaml-gen)
         uses: ocaml/setup-ocaml@v2
         with:

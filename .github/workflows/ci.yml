@@ -43,6 +43,8 @@ jobs:
           # bugfixing release of rust.
           override: true
 
+      # Important to setup OCaml before running lint because linting requires an
+      # OCaml version installed on the machine
       - name: Setup OCaml ${{ matrix.ocaml_version }} (because of ocaml-gen)
         uses: ocaml/setup-ocaml@v2
         with:

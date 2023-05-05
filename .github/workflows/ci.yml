@@ -72,8 +72,10 @@ jobs:
 
       - name: Build and run tests
         run: |
+          opam install . --deps-only --with-test
           eval $(opam env)
           dune build
+          dune runtest
 
       - name: Check that up-to-date bindings are checked in
         run: |

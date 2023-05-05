@@ -20,7 +20,10 @@ jobs:
       matrix:
         rust_toolchain_version: [1.67, 1.68, 1.69]
         # Follow ocamlgen-test.opam requirements
-        ocaml_version: [4.12, 4.13, 4.14, 5.0.0]
+        # FIXME: currently not available for 5.0.0.
+        # It might be related to boxroot dependency, and we would need to bump
+        # up the ocaml-rs dependency
+        ocaml_version: [4.12, 4.13, 4.14]
 
     runs-on: ubuntu-latest
     name: Run some basic checks and tests

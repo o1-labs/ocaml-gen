@@ -52,11 +52,15 @@ jobs:
           # https://github.com/ocaml/setup-ocaml/issues/211#issuecomment-1058882386
           # disable-cache: true
 
+      - name: Setup OCaml dependencies
+        run: |
+          opam install . --deps-only --with-test
+
       #
       # Coding guidelines
       #
 
-      - name: Enforce formating
+      - name: Enforce Rust formatting
         uses: actions-rs/cargo@v1
         with:
           command: fmt
@@ -68,13 +72,18 @@ jobs:
           command: clippy
           args: --all --features=without-ocamlopt -- -D warnings
 
+      - name: Enforce OCaml formatting
+        run: |
+          eval $(opam env)
+          opam install ocamlformat.$(awk -F = '$1 == "version" {print $2}' .ocamlformat)
+          dune build @fmt
+
       #
       # OCaml (tests)
       #
 
       - name: Build and run tests
         run: |
-          opam install . --deps-only --with-test
           eval $(opam env)
           dune build
           dune runtest

@@ -39,6 +39,9 @@ jobs:
           # Doc: https://rust-lang.github.io/rustup/concepts/profiles.html
           profile: default
           toolchain: ${{ matrix.rust_toolchain_version }}
+          # Override the default toolchain. This is required in the case of
+          # bugfixing release of rust.
+          override: true
 
       - name: Setup OCaml ${{ matrix.ocaml_version }} (because of ocaml-gen)
         uses: ocaml/setup-ocaml@v2

@@ -43,7 +43,37 @@ pub fn pack_present() -> Package<String> {
 
 #[ocaml_gen::func]
 #[ocaml::func]
-pub fn fn_with_more_than_5_parameters(
+pub fn fn_one_parameter(v1: Car) -> Car {
+    v1
+}
+
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn fn_two_parameters(v1: Car, _v2: usize) -> Car {
+    v1
+}
+
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn fn_three_parameters(v1: Car, _v2: usize, _v3: usize) -> Car {
+    v1
+}
+
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn fn_four_parameters(v1: Car, _v2: usize, _v3: usize, _v4: usize) -> Car {
+    v1
+}
+
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn fn_five_parameters(v1: Car, _v2: usize, _v3: usize, _v4: usize, _v5: usize) -> Car {
+    v1
+}
+
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn fn_six_parameters(
     v1: Car,
     _v2: usize,
     _v3: usize,

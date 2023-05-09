@@ -18,7 +18,12 @@ fn main() -> std::io::Result<()> {
         ocaml_gen::decl_type!(w, env, Car => "t");
     });
 
-    ocaml_gen::decl_func!(w, env, fn_with_more_than_5_parameters => "more_than_5_parameters");
+    ocaml_gen::decl_func!(w, env, fn_one_parameter => "fn_one_parameter");
+    ocaml_gen::decl_func!(w, env, fn_two_parameters => "fn_two_parameters");
+    ocaml_gen::decl_func!(w, env, fn_three_parameters => "fn_three_parameters");
+    ocaml_gen::decl_func!(w, env, fn_four_parameters => "fn_four_parameters");
+    ocaml_gen::decl_func!(w, env, fn_five_parameters => "fn_five_parameters");
+    ocaml_gen::decl_func!(w, env, fn_six_parameters => "fn_six_parameters");
 
     ocaml_gen::decl_module!(w, env, "Toyota", {
         ocaml_gen::decl_type_alias!(w, env, "t" => Car);

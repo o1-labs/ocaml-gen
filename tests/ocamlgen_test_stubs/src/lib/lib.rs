@@ -40,3 +40,16 @@ pub fn pack_present() -> Package<String> {
         gift: "hello".to_string(),
     }
 }
+
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn fn_with_more_than_5_parameters(
+    v1: Car,
+    _v2: usize,
+    _v3: usize,
+    _v4: usize,
+    _v5: usize,
+    _v6: usize,
+) -> Car {
+    v1
+}

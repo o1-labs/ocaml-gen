@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["ocaml_gen","ocaml_gen_derive"];
+window.ALL_CRATES = ["main","ocaml_gen","ocaml_gen_derive","ocamlgen_test_stubs"];

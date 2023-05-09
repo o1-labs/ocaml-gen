@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_toyota","create_toyota_to_ocaml","new","new_to_ocaml","pack_present","pack_present_to_ocaml","print","print_to_ocaml"],"struct":["Car","Package","SingleTuple"]};

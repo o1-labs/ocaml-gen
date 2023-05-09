@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"macro":[["decl_fake_generic","Creates a fake generic. This is a necessary hack, at the moment, to declare types (with the [`decl_type`] macro) that have generic parameters."],["decl_func","Declares the binding for a given function"],["decl_module","Creates a module"],["decl_type","Declares the binding for a given type"],["decl_type_alias","Declares a new OCaml type that is made of other types"]]};
+window.SIDEBAR_ITEMS = {"macro":["decl_fake_generic","decl_func","decl_module","decl_type","decl_type_alias"]};

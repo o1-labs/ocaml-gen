@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ProcMacroHack"],"fn":["main"],"macro":["proc_macro_call"]};

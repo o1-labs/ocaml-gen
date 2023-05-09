@@ -16,6 +16,15 @@ env:
 
 jobs:
   run_checks:
+    strategy:
+      matrix:
+        rust_toolchain_version: [1.67, 1.68, 1.69]
+        # Follow ocamlgen-test.opam requirements
+        # FIXME: currently not available for 5.0.0.
+        # It might be related to boxroot dependency, and we would need to bump
+        # up the ocaml-rs dependency
+        ocaml_version: [4.12, 4.13, 4.14]
+
     runs-on: ubuntu-latest
     name: Run some basic checks and tests
     steps:
@@ -26,44 +35,35 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v2
 
-      - name: Set up cargo/rust
+      - name: Set up cargo/rust ${{ matrix.rust_toolchain_version }}
         uses: actions-rs/toolchain@v1
         with:
-          profile: minimal
-          toolchain: "1.63.0"
-          components: rustfmt, clippy
+          # Using default to get rust-docs, rustfmt and clippy
+          # Doc: https://rust-lang.github.io/rustup/concepts/profiles.html
+          profile: default
+          toolchain: ${{ matrix.rust_toolchain_version }}
+          # Override the default toolchain. This is required in the case of
+          # bugfixing release of rust.
+          override: true
 
-      # https://github.com/Swatinem/rust-cache
-      - name: Cache Rust stuff
-        uses: Swatinem/rust-cache@v1
+      # Important to setup OCaml before running lint because linting requires an
+      # OCaml version installed on the machine
+      - name: Setup OCaml ${{ matrix.ocaml_version }} (because of ocaml-gen)
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml_version }}
+          # https://github.com/ocaml/setup-ocaml/issues/211#issuecomment-1058882386
+          # disable-cache: true
 
-      - name: Setup OCaml (because of ocaml-gen)
+      - name: Setup OCaml dependencies
         run: |
-          sudo apt update
-          sudo apt install -y opam
-          opam init -y
-          opam install dune
-          eval $(opam env)
-
-      # https://nexte.st/book/pre-built-binaries.html#using-nextest-in-github-actions
-      - name: Install latest nextest release
-        uses: taiki-e/install-action@nextest
-
-      #
-      # Tests
-      # 
-
-      - name: Test with latest nextest release (faster than cargo test)
-        uses: actions-rs/cargo@v1
-        with:            
-          command: nextest
-          args: run --all-features --release
+          opam install . --deps-only --with-test
 
       #
       # Coding guidelines
       #
 
-      - name: Enforce formating
+      - name: Enforce Rust formatting
         uses: actions-rs/cargo@v1
         with:
           command: fmt
@@ -73,16 +73,23 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: --all-features -- -D warnings
+          args: --all --features=without-ocamlopt -- -D warnings
+
+      - name: Enforce OCaml formatting
+        run: |
+          eval $(opam env)
+          opam install ocamlformat.$(awk -F = '$1 == "version" {print $2}' .ocamlformat)
+          dune build @fmt
 
       #
-      # Ocaml (tests)
+      # OCaml (tests)
       #
-      
+
       - name: Build and run tests
         run: |
           eval $(opam env)
           dune build
+          dune runtest
 
       - name: Check that up-to-date bindings are checked in
         run: |

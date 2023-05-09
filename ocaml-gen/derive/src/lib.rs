@@ -56,7 +56,7 @@ pub fn func(_attribute: TokenStream, item: TokenStream) -> TokenStream {
 
     let rust_name_str = rust_name.to_string();
 
-    let fn_name = Ident::new(&format!("{}_to_ocaml", rust_name), Span::call_site());
+    let fn_name = Ident::new(&format!("{rust_name}_to_ocaml"), Span::call_site());
 
     let new_fn = quote! {
         pub fn #fn_name(env: &::ocaml_gen::Env, rename: Option<&'static str>) -> String {

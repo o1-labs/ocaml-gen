@@ -101,7 +101,7 @@ impl Env {
         let (type_path, type_name) = self
             .locations
             .get(&ty)
-            .unwrap_or_else(|| panic!("ocaml-gen: the type {} hasn't been declared", name));
+            .unwrap_or_else(|| panic!("ocaml-gen: the type {name} hasn't been declared"));
 
         // path resolution
         let mut current = self.current_module.clone();
@@ -149,8 +149,7 @@ impl Env {
             .expect("module name cannot be empty");
         assert!(
             first_letter.to_uppercase().to_string() == first_letter.to_string(),
-            "ocaml-gen: OCaml module names start with an uppercase, you provided: {}",
-            mod_name
+            "ocaml-gen: OCaml module names start with an uppercase, you provided: {mod_name}"
         );
 
         // nest into the aliases vector
@@ -159,7 +158,7 @@ impl Env {
         // create a module
         self.current_module.push(mod_name);
 
-        format!("module {} = struct ", mod_name)
+        format!("module {mod_name} = struct ")
     }
 
     /// how deeply nested are we currently? (default is 0)

@@ -139,6 +139,16 @@ impl OCamlDesc for bool {
     }
 }
 
+impl OCamlDesc for i32 {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "int32".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
 impl<T> OCamlDesc for ocaml::Pointer<'_, T>
 where
     T: OCamlDesc,

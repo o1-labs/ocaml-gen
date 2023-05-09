@@ -12,6 +12,7 @@ external fn_three_parameters : Car.t -> int -> int -> Car.t = "fn_three_paramete
 external fn_four_parameters : Car.t -> int -> int -> int -> Car.t = "fn_four_parameters"
 external fn_five_parameters : Car.t -> int -> int -> int -> int -> Car.t = "fn_five_parameters"
 external fn_six_parameters : Car.t -> int -> int -> int -> int -> int -> Car.t = "fn_six_parameters_bytecode" "fn_six_parameters"
+external test_add_i32 : int32 -> int32 -> int32 = "test_add_i32"
 
 module Toyota = struct 
   type nonrec t = Car.t

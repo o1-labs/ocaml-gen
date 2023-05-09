@@ -83,3 +83,9 @@ pub fn fn_six_parameters(
 ) -> Car {
     v1
 }
+// Test OCamlDesc is implemented for i32
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn test_add_i32(s1: i32, s2: i32) -> i32 {
+    s1 + s2
+}

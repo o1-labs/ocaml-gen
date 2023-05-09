@@ -2,7 +2,8 @@ use ocaml_gen::prelude::*;
 use ocamlgen_test_stubs::*;
 
 use std::fmt::Write as _;
-use std::fs;
+use std::io;
+use std::io::Write;
 
 fn main() -> std::io::Result<()> {
     let mut w = String::new();
@@ -39,6 +40,6 @@ fn main() -> std::io::Result<()> {
         ocaml_gen::decl_func!(w, env, pack_present => "pack_present");
     });
 
-    fs::write("bindings.ml", w)?;
+    io::stdout().write_all(w.as_bytes())?;
     Ok(())
 }

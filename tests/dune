@@ -31,22 +31,18 @@
      bindings.ml
      (run cargo run --bin main --release --target-dir %{project_root}/target))))))
 
-;; test library
-
-(library
- (name ocamlgen_test_lib)
- (public_name ocamlgen-test)
- (modules lib bindings)
- (foreign_archives ocamlgen_test_stubs))
-
-;; test executable (links to the library)
+;; Generate an executable for testing
 
 (executable
  (name ocamlgen_test)
- (modules ocamlgen_test)
- (libraries ocamlgen_test_lib))
+ (public_name ocamlgen_test)
+ (package ocamlgen-test)
+ (modules ocamlgen_test bindings)
+ (libraries alcotest)
+ (foreign_archives ocamlgen_test_stubs))
 
-;; rule for running the tests (runs the executable)
+;; rule for running the tests (runs the executable and apply diff on the
+;; generated bindings)
 
 (rule
  (alias runtest)

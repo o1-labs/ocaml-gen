@@ -26,6 +26,7 @@ fn main() -> std::io::Result<()> {
     ocaml_gen::decl_func!(w, env, fn_five_parameters => "fn_five_parameters");
     ocaml_gen::decl_func!(w, env, fn_six_parameters => "fn_six_parameters");
     ocaml_gen::decl_func!(w, env, test_add_i32 => "test_add_i32");
+    ocaml_gen::decl_func!(w, env, test_add_usize => "test_add_usize");
 
     ocaml_gen::decl_module!(w, env, "Toyota", {
         ocaml_gen::decl_type_alias!(w, env, "t" => Car);

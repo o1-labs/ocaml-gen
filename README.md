@@ -4,7 +4,26 @@
 [![Docs](https://docs.rs/badgen/badge.svg)](https://o1-labs.github.io/ocaml-gen/)
 # OCaml-gen
 
-This Rust library allows you to automatically generate OCaml bindings for your Rust code. It is meant to be used in conjunction with [`ocaml-rs`](https://github.com/zshipko/ocaml-rs).
+## Motivation
+
+[`ocaml-rs`](https://github.com/zshipko/ocaml-rs) provides functions and
+wrappers to interact with the OCaml runtime which implements a garbage collector
+to manage memory automatically. The library allows developers to write functions
+in Rust that can be called from OCaml and vice versa. It provides automatic
+conversion between OCaml and Rust value representations. The users can use
+macros on the Rust side like `ocaml::FromValue` and `ocaml::ToValue` to convert
+back and forth the values without thinking about the garbage
+collector.
+Macros `ocaml::func` in conjunction with `ocaml::sig` can be used on functions
+to generate codes which will be compatible with the OCaml runtime.
+More information is available in the [ocaml-rs book](https://zshipko.github.io/ocaml-rs/).
+
+Even if `ocaml-rs` provides some macros, the user will need to write the OCaml
+definitions with the corresponding types and use external definitions. Also,
+macros to access nested values in structures are not provided in `ocaml-rs`.
+The goal of `ocaml-gen` and `ocaml-gen-derive` is to provide automatic binding
+generations and to add macros easing the development of large applications.
+It is meant to be used in conjunction with [`ocaml-rs`](https://github.com/zshipko/ocaml-rs).
 
 **SECURITY WARNING: this is still an experimental library, you should verify that the bindings generated are correct if you are using this in production**.
 

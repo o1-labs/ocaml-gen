@@ -79,11 +79,21 @@ pub fn func(_attribute: TokenStream, item: TokenStream) -> TokenStream {
             // return value
             let return_value = #return_value;
 
+            if args.len() <= 5 {
+                format!(
+                    "external {} : {} -> {} = \"{}\"",
+                    ocaml_name, inputs, return_value, #rust_name_str
+                )
+            }
+            // !! This is not the best way to handle this case. This will break
+            // if ocaml-rs changes its code generator.
+            else {
+                format!(
+                    "external {} : {} -> {} = \"{}_bytecode\" \"{}\"",
+                    ocaml_name, inputs, return_value, #rust_name_str, #rust_name_str
+                )
+            }
             // return the binding
-            format!(
-                "external {} : {} -> {} = \"{}\"",
-                ocaml_name, inputs, return_value, #rust_name_str
-            )
         }
     };
 

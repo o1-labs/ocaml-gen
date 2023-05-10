@@ -17,6 +17,18 @@ opam switch create ./ 4.14.0
 opam install merlin ocamlformat.$(awk -F = '$1 == "version" {print $2}' .ocamlformat)
 ```
 
+## Run tests
+
+```
+dune build @runtest
+```
+
+If you change the file `tests/ocamlgen_test_stubs/src/bin/main.rs` or anything related to code generation, you will need to update `tests/expected_bindings.ml`. You can use:
+```
+dune build @runtest --auto-promote
+```
+to rely on `dune` to update the file. You will need to commit it to make the CI happy.
+
 ## Organization
 
 * [ocaml-gen](ocaml-gen): the tool that allows us to generate the OCaml bindings from the Rust code.

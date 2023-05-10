@@ -27,7 +27,9 @@
       cp
       %{project_root}/target/release/libocamlgen_test_stubs.dylib
       dllocamlgen_test_stubs.so))
-    (run cargo run --bin main --release --target-dir %{project_root}/target)))))
+    (with-stdout-to
+     bindings.ml
+     (run cargo run --bin main --release --target-dir %{project_root}/target))))))
 
 ;; test library
 
@@ -49,4 +51,7 @@
 (rule
  (alias runtest)
  (action
-  (run ./ocamlgen_test.exe)))
+  (progn
+   (run ./ocamlgen_test.exe)
+   ;; https://dune.readthedocs.io/en/stable/concepts.html#diffing-and-promotion
+   (diff expected_bindings.ml bindings.ml))))

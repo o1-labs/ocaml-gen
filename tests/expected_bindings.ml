@@ -6,6 +6,12 @@ module Car = struct
   type nonrec t
 end
 
+external fn_one_parameter : Car.t -> Car.t = "fn_one_parameter"
+external fn_two_parameters : Car.t -> int -> Car.t = "fn_two_parameters"
+external fn_three_parameters : Car.t -> int -> int -> Car.t = "fn_three_parameters"
+external fn_four_parameters : Car.t -> int -> int -> int -> Car.t = "fn_four_parameters"
+external fn_five_parameters : Car.t -> int -> int -> int -> int -> Car.t = "fn_five_parameters"
+external fn_six_parameters : Car.t -> int -> int -> int -> int -> int -> Car.t = "fn_six_parameters_bytecode" "fn_six_parameters"
 
 module Toyota = struct 
   type nonrec t = Car.t

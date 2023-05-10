@@ -3,6 +3,10 @@
 //! The OCaml description should be the corresponding data types in OCaml
 //! This should correspond to the mapping defined in the ocaml-rs book:
 //! `<https://github.com/zshipko/ocaml-rs/blob/v1.0.0-beta.4/doc/src/02_type_conversion.md>`
+//! FIXME:
+//! Unsigned types like uint16, uint32 and uint64 are not implemented as OCaml
+//! does not provide types in the Stdlib for it. A custom block should be used.
+//! Using [Stdint](https://github.com/andrenth/ocaml-stdint/) could be a solution.
 
 use crate::{Env, OCamlDesc};
 use const_random::const_random;

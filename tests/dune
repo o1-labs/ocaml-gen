@@ -38,7 +38,7 @@
  (public_name ocamlgen_test)
  (package ocamlgen-test)
  (modules ocamlgen_test bindings)
- (libraries alcotest)
+ (libraries alcotest qcheck qcheck-alcotest)
  (foreign_archives ocamlgen_test_stubs))
 
 ;; rule for running the tests (runs the executable and apply diff on the

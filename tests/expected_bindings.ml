@@ -15,6 +15,7 @@ external fn_six_parameters : Car.t -> int -> int -> int -> int -> int -> Car.t =
 external test_add_i32 : int32 -> int32 -> int32 = "test_add_i32"
 external test_add_usize : int -> int -> int = "test_add_usize"
 external test_bytes_get : bytes -> int -> char = "test_bytes_get"
+external test_get_ascii_code : char -> int32 = "test_get_ascii_code"
 
 module Toyota = struct 
   type nonrec t = Car.t

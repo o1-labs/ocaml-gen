@@ -30,6 +30,8 @@ fn main() -> std::io::Result<()> {
 
     ocaml_gen::decl_func!(w, env, test_bytes_get => "test_bytes_get");
 
+    ocaml_gen::decl_func!(w, env, test_get_ascii_code => "test_get_ascii_code");
+
     ocaml_gen::decl_module!(w, env, "Toyota", {
         ocaml_gen::decl_type_alias!(w, env, "t" => Car);
         ocaml_gen::decl_func!(w, env, create_toyota => "create_toyota");

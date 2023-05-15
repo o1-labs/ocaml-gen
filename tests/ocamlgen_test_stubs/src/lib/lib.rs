@@ -101,3 +101,9 @@ pub fn test_add_usize(s1: usize, s2: usize) -> usize {
 pub fn test_bytes_get(s1: &[u8], i: usize) -> u8 {
     s1[i]
 }
+
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn test_get_ascii_code(ascii: u8) -> i32 {
+    ascii as i32
+}

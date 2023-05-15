@@ -34,6 +34,16 @@ where
     }
 }
 
+impl OCamlDesc for u8 {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "char".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
 impl OCamlDesc for [u8; 32] {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "bytes".to_string()

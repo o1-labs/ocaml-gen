@@ -16,10 +16,15 @@ let test_bytes_get =
         let c = Bytes.get bs idx in
         Bindings.test_bytes_get bs idx = c ) )
 
+let test_u8_char_get_ascii_code =
+  QCheck.(
+    Test.make ~name:"Test u8 binding by getting ASCII code" QCheck.char
+      (fun c -> Int32.to_int @@ Bindings.test_get_ascii_code c = int_of_char c) )
+
 let () =
   let builtin_types_qcheck_suite =
     List.map QCheck_alcotest.to_alcotest
-      [ test_built_in_type_int32; test_bytes_get ]
+      [ test_built_in_type_int32; test_bytes_get; test_u8_char_get_ascii_code ]
   in
   let open Alcotest in
   run "Test binding generations"

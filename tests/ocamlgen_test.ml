@@ -8,9 +8,18 @@ let test_built_in_type_int32 =
       (tup2 QCheck.int32 QCheck.int32) (fun (i1, i2) ->
         Int32.(add i1 i2) = Bindings.test_add_i32 i1 i2 ) )
 
+let test_bytes_get =
+  QCheck.(
+    Test.make ~name:"Test builtin type Bytes.t with get"
+      (tup2 QCheck.bytes QCheck.int) (fun (bs, idx) ->
+        assume (idx >= 0 && idx < Bytes.length bs) ;
+        let c = Bytes.get bs idx in
+        Bindings.test_bytes_get bs idx = c ) )
+
 let () =
   let builtin_types_qcheck_suite =
-    List.map QCheck_alcotest.to_alcotest [ test_built_in_type_int32 ]
+    List.map QCheck_alcotest.to_alcotest
+      [ test_built_in_type_int32; test_bytes_get ]
   in
   let open Alcotest in
   run "Test binding generations"

@@ -95,3 +95,9 @@ pub fn test_add_i32(s1: i32, s2: i32) -> i32 {
 pub fn test_add_usize(s1: usize, s2: usize) -> usize {
     s1 + s2
 }
+
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn test_bytes_get(s1: &[u8], i: usize) -> u8 {
+    s1[i]
+}

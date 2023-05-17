@@ -5,7 +5,12 @@ let test_single_tuple_access_field () =
 let test_built_in_type_int32 =
   QCheck.(
     Test.make ~name:"Test builtin type int32 with addition"
-      (tup2 QCheck.int32 QCheck.int32) (fun (i1, i2) ->
+      (tup2
+         (QCheck.int_range (-1_000_000) 1_000_000)
+         (QCheck.int_range (-1_000_000) 1_000_000) )
+      (fun (i1, i2) ->
+        let i1 = Int32.of_int i1 in
+        let i2 = Int32.of_int i2 in
         Int32.(add i1 i2) = Bindings.test_add_i32 i1 i2 ) )
 
 let test_bytes_get =

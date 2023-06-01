@@ -46,6 +46,8 @@ jobs:
             ./rustup-init -y --default-toolchain "${{ matrix.rust_toolchain_version }}" --profile default
             rm ./rustup-init
             echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+            # overwriting default rust-toolchain
+            echo ${{ matrix.rust_toolchain_version }} > rust-toolchain
 
       - name: Setup OCaml ${{ matrix.ocaml_version }}
         uses: ocaml/setup-ocaml@v2
@@ -98,4 +100,4 @@ jobs:
 
       - name: Check that up-to-date bindings are checked in
         run: |
-          git diff --exit-code
+          git diff --exit-code ":(exclude)rust-toolchain"

@@ -35,20 +35,21 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v2
 
-      - name: Set up cargo/rust ${{ matrix.rust_toolchain_version }}
-        uses: actions-rs/toolchain@v1
-        with:
-          # Using default to get rust-docs, rustfmt and clippy
-          # Doc: https://rust-lang.github.io/rustup/concepts/profiles.html
-          profile: default
-          toolchain: ${{ matrix.rust_toolchain_version }}
-          # Override the default toolchain. This is required in the case of
-          # bugfixing release of rust.
-          override: true
+      # as action-rs does not seem to be maintained anymore, building from
+      # scratch the environment using rustup
+      - name: Setup Rust toolchain ${{ matrix.rust_toolchain_version }}
+        run:
+          |
+            curl --proto '=https' --tlsv1.2 -sSf -o rustup-init \
+            https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+            chmod +x ./rustup-init
+            ./rustup-init -y --default-toolchain "${{ matrix.rust_toolchain_version }}" --profile default
+            rm ./rustup-init
+            echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+            # overwriting default rust-toolchain
+            echo ${{ matrix.rust_toolchain_version }} > rust-toolchain
 
-      # Important to setup OCaml before running lint because linting requires an
-      # OCaml version installed on the machine
-      - name: Setup OCaml ${{ matrix.ocaml_version }} (because of ocaml-gen)
+      - name: Setup OCaml ${{ matrix.ocaml_version }}
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: ${{ matrix.ocaml_version }}
@@ -57,23 +58,29 @@ jobs:
 
       - name: Setup OCaml dependencies
         run: |
+          eval $(opam env)
           opam install . --deps-only --with-test
+
+      - name: List OCaml and Rust versions
+        run: |
+          eval $(opam env)
+          echo "OCaml version $(ocamlc --version) (location = $(which ocamlc))"
+          echo "OPAM version $(opam --version) (location = $(which opam))"
+          echo "Rust version $(rustc --version) (location = $(which rustc))"
 
       #
       # Coding guidelines
       #
 
       - name: Enforce Rust formatting
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: -- --check
+        run: |
+            eval $(opam env)
+            cargo run fmt -- --check
 
       - name: Lint (clippy)
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --all --features=without-ocamlopt -- -D warnings
+        run: |
+            eval $(opam env)
+            cargo run clippy --all -- -D warnings
 
       - name: Enforce OCaml formatting
         run: |
@@ -93,4 +100,4 @@ jobs:
 
       - name: Check that up-to-date bindings are checked in
         run: |
-          git diff --exit-code
+          git diff --exit-code ":(exclude)rust-toolchain"

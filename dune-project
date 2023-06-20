@@ -16,6 +16,5 @@
  (depends
   (dune (>= 3.0))
   (ocaml (and (>= 4.12) (< 5.0)))
-  (conf-rust (>= 0.1))
  )
 )

@@ -1,0 +1,57 @@
+name: Publishing to crates.io on tags
+
+on:
+  push:
+    tags:
+      - "*"
+
+env:
+  # https://doc.rust-lang.org/cargo/reference/profiles.html#release
+  RUSTFLAGS: -Coverflow-checks=y -Cdebug-assertions=y
+  # https://doc.rust-lang.org/cargo/reference/profiles.html#incremental
+  CARGO_INCREMENTAL: "1"
+  # https://nexte.st/book/pre-built-binaries.html#using-nextest-in-github-actions
+  CARGO_TERM_COLOR: always
+  # The package name to be used to publish on crates.io
+  PACKAGE_NAME: stubs_rust
+  # Rust version to use to build
+  RUST_VERSION: "1.69"
+  # OCaml version to use to build
+  OCAML_VERSION: "4.14"
+
+jobs:
+  publish_crate:
+    runs-on: ubuntu-latest
+    name: Publish on crates.io
+    steps:
+      - name: Checkout to tag
+        uses: actions/checkout@v2
+
+      # as action-rs does not seem to be maintained anymore, building from
+      # scratch the environment using rustup
+      - name: Setup Rust toolchain ${{ env.RUST_VERSION }}
+        run:
+          |
+            curl --proto '=https' --tlsv1.2 -sSf -o rustup-init \
+            https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+            chmod +x ./rustup-init
+            ./rustup-init -y --default-toolchain "${{ env.RUST_VERSION }}" --profile default
+            rm ./rustup-init
+            echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+            # overwriting default rust-toolchain
+            echo ${{ env.RUST_VERSION }} > rust-toolchain
+
+      - name: Setup OCaml ${{ env.OCAML_VERSION }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ env.OCAML_VERSION }}
+          # https://github.com/ocaml/setup-ocaml/issues/211#issuecomment-1058882386
+          # disable-cache: true
+
+      - name: Publish to crates.io
+        run:
+          |
+            eval $(opam env)
+            cargo publish -p ${{ env.PACKAGE_NAME }} --token ${CRATES_IO_TOKEN}
+        env:
+          CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}

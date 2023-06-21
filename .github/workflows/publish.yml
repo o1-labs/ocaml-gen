@@ -12,8 +12,6 @@ env:
   CARGO_INCREMENTAL: "1"
   # https://nexte.st/book/pre-built-binaries.html#using-nextest-in-github-actions
   CARGO_TERM_COLOR: always
-  # The package name to be used to publish on crates.io
-  PACKAGE_NAME: stubs_rust
   # Rust version to use to build
   RUST_VERSION: "1.69"
   # OCaml version to use to build
@@ -52,6 +50,7 @@ jobs:
         run:
           |
             eval $(opam env)
-            cargo publish -p ${{ env.PACKAGE_NAME }} --token ${CRATES_IO_TOKEN}
+            cargo publish -p ocaml-gen --manifest-path ocaml-gen/Cargo.toml --token ${CRATES_IO_TOKEN}
+            cargo publish -p ocaml-gen-derive --manifest-path ocaml-gen/derive/Cargo.toml --token ${CRATES_IO_TOKEN}
         env:
           CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}

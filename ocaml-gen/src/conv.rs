@@ -1,5 +1,12 @@
 //! Implementations of [`crate::OCamlDesc`] for types
 //! that have natural equivalents in OCaml.
+//! The OCaml description should be the corresponding data types in OCaml
+//! This should correspond to the mapping defined in the ocaml-rs book:
+//! `<https://github.com/zshipko/ocaml-rs/blob/v1.0.0-beta.4/doc/src/02_type_conversion.md>`
+//! FIXME:
+//! Unsigned types like uint16, uint32 and uint64 are not implemented as OCaml
+//! does not provide types in the Stdlib for it. A custom block should be used.
+//! Using [Stdint](https://github.com/andrenth/ocaml-stdint/) could be a solution.
 
 use crate::{Env, OCamlDesc};
 use const_random::const_random;
@@ -27,6 +34,16 @@ where
     }
 }
 
+impl OCamlDesc for u8 {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "char".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
 impl OCamlDesc for [u8; 32] {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "bytes".to_string()
@@ -38,16 +55,6 @@ impl OCamlDesc for [u8; 32] {
 }
 
 impl OCamlDesc for &[u8] {
-    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
-        "bytes".to_string()
-    }
-
-    fn unique_id() -> u128 {
-        const_random!(u128)
-    }
-}
-
-impl OCamlDesc for Vec<u8> {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "bytes".to_string()
     }
@@ -129,6 +136,16 @@ impl OCamlDesc for String {
 impl OCamlDesc for bool {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "bool".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
+impl OCamlDesc for i32 {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "int32".to_string()
     }
 
     fn unique_id() -> u128 {

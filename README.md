@@ -57,3 +57,13 @@ to rely on `dune` to update the file. You will need to commit it to make the CI 
 ## Additional resources
 
 You can check the [recording](https://www.youtube.com/watch?v=LuXo2cNkgyA&feature=youtu.be) I made when I first introduced the tool internally.
+
+## Publish a new release
+
+An automatic release is set up with GitHub actions. To make a new release of
+ocaml-gen and ocaml-gen-derive:
+
+1. Change the version of `ocaml-gen-derive` in `ocaml-gen/Cargo.toml` to the new
+   release version.
+2. Create a tag with `git tag -m "VERSION" -a "x.y.z"`
+3. Push the tag with `git push --tags`

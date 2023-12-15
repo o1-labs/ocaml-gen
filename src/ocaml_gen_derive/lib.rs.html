@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `ocaml-gen/derive/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-f40c346f39d9abc1.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ocaml_gen_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.72.0-nightly (065a1f5df 2023-06-21)" data-search-js="search-95c92dd01058facf.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-190c35055d2a8300.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../ocaml_gen_derive/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `ocaml-gen/derive/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e883e87179a81222.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ocaml_gen_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (de686cbc6 2023-12-14)" data-channel="nightly" data-search-js="search-874d56868bf05518.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-bc37acceda91d44a.js"></script><script defer src="../../static.files/src-script-1a1b62b930d385c3.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -795,7 +795,7 @@
 ///
 </span><span class="attr">#[proc_macro_attribute]
 </span><span class="kw">pub fn </span>func(_attribute: TokenStream, item: TokenStream) -&gt; TokenStream {
-    <span class="kw">let </span>item_fn: syn::ItemFn = syn::parse(item).expect(<span class="string">&quot;couldn&#39;t parse item&quot;</span>);
+    <span class="kw">let </span>item_fn: syn::ItemFn = syn::parse(item).expect(<span class="string">"couldn't parse item"</span>);
 
     <span class="kw">let </span>rust_name = <span class="kw-2">&amp;</span>item_fn.sig.ident;
     <span class="kw">let </span>inputs = <span class="kw-2">&amp;</span>item_fn.sig.inputs;
@@ -812,7 +812,7 @@
         .collect();
 
     <span class="kw">let </span>return_value = <span class="kw">match </span>output {
-        ReturnType::Default =&gt; <span class="macro">quote! </span>{ <span class="string">&quot;unit&quot;</span>.to_string() },
+        ReturnType::Default =&gt; <span class="macro">quote! </span>{ <span class="string">"unit"</span>.to_string() },
         ReturnType::Type(<span class="kw">_</span>, t) =&gt; <span class="macro">quote! </span>{
             &lt;#t <span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::ocaml_desc(env, <span class="kw-2">&amp;</span>[])
         },
@@ -820,10 +820,10 @@
 
     <span class="kw">let </span>rust_name_str = rust_name.to_string();
 
-    <span class="kw">let </span>fn_name = Ident::new(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{rust_name}_to_ocaml&quot;</span>), Span::call_site());
+    <span class="kw">let </span>fn_name = Ident::new(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{rust_name}_to_ocaml"</span>), Span::call_site());
 
     <span class="kw">let </span>new_fn = <span class="macro">quote! </span>{
-        <span class="kw">pub fn </span>#fn_name(env: <span class="kw-2">&amp;</span>::ocaml_gen::Env, rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;) -&gt; String {
+        <span class="kw">pub fn </span>#fn_name(env: <span class="kw-2">&amp;</span>::ocaml_gen::Env, rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;) -&gt; String {
             <span class="comment">// function name
             </span><span class="kw">let </span>ocaml_name = rename.unwrap_or(#ocaml_name);
 
@@ -835,9 +835,9 @@
                 );
             );*
             <span class="kw">let </span>inputs = <span class="kw">if </span>args.len() == <span class="number">0 </span>{
-                <span class="string">&quot;unit&quot;</span>.to_string()
+                <span class="string">"unit"</span>.to_string()
             } <span class="kw">else </span>{
-                args.join(<span class="string">&quot; -&gt; &quot;</span>)
+                args.join(<span class="string">" -&gt; "</span>)
             };
 
             <span class="comment">// return value
@@ -845,7 +845,7 @@
 
             <span class="kw">if </span>args.len() &lt;= <span class="number">5 </span>{
                 <span class="macro">format!</span>(
-                    <span class="string">&quot;external {} : {} -&gt; {} = \&quot;{}\&quot;&quot;</span>,
+                    <span class="string">"external {} : {} -&gt; {} = \"{}\""</span>,
                     ocaml_name, inputs, return_value, #rust_name_str
                 )
             }
@@ -853,7 +853,7 @@
             // if ocaml-rs changes its code generator.
             </span><span class="kw">else </span>{
                 <span class="macro">format!</span>(
-                    <span class="string">&quot;external {} : {} -&gt; {} = \&quot;{}_bytecode\&quot; \&quot;{}\&quot;&quot;</span>,
+                    <span class="string">"external {} : {} -&gt; {} = \"{}_bytecode\" \"{}\""</span>,
                     ocaml_name, inputs, return_value, #rust_name_str, #rust_name_str
                 )
             }
@@ -862,7 +862,7 @@
     };
 
     <span class="kw">let </span>gen = <span class="macro">quote! </span>{
-        <span class="comment">// don&#39;t forget to generate code that also contains the old function :)
+        <span class="comment">// don't forget to generate code that also contains the old function :)
         </span>#item_fn
         #new_fn
     };
@@ -891,7 +891,7 @@
 ///
 </span><span class="attr">#[proc_macro_derive(Enum)]
 </span><span class="kw">pub fn </span>derive_ocaml_enum(item: TokenStream) -&gt; TokenStream {
-    <span class="kw">let </span>item_enum: syn::ItemEnum = syn::parse(item).expect(<span class="string">&quot;only enum are supported with Enum&quot;</span>);
+    <span class="kw">let </span>item_enum: syn::ItemEnum = syn::parse(item).expect(<span class="string">"only enum are supported with Enum"</span>);
 
     <span class="comment">//
     // ocaml_desc
@@ -927,7 +927,7 @@
             </span><span class="kw">if </span>generics_ocaml.is_empty() || aliased {
                 name.to_string()
             } <span class="kw">else </span>{
-                <span class="macro">format!</span>(<span class="string">&quot;({}) {}&quot;</span>, generics_ocaml.join(<span class="string">&quot;, &quot;</span>), name)
+                <span class="macro">format!</span>(<span class="string">"({}) {}"</span>, generics_ocaml.join(<span class="string">", "</span>), name)
             }
         }
     };
@@ -958,13 +958,13 @@
 
     <span class="kw">let </span>body = {
         <span class="comment">// we want to resolve types at runtime (to do relocation/renaming)
-        // to do that, the macro builds a list of types that doesn&#39;t need to be resolved (generic types), as well as a list of types to resolve
+        // to do that, the macro builds a list of types that doesn't need to be resolved (generic types), as well as a list of types to resolve
         // at runtime, both list are consumed to generate the OCaml binding
 
         // list of variants
         </span><span class="kw">let </span><span class="kw-2">mut </span>variants: Vec&lt;String&gt; = <span class="macro">vec!</span>[];
         <span class="comment">// list of types associated to each variant. It is punctured:
-        // an item can appear as &quot;#&quot; to indicate that it needs to be resolved at run-time
+        // an item can appear as "#" to indicate that it needs to be resolved at run-time
         </span><span class="kw">let </span><span class="kw-2">mut </span>punctured_types: Vec&lt;Vec&lt;String&gt;&gt; = <span class="macro">vec!</span>[];
         <span class="comment">// list of types that will need to be resolved at run-time
         </span><span class="kw">let </span><span class="kw-2">mut </span>fields_to_call = <span class="macro">vec!</span>[];
@@ -975,13 +975,13 @@
             variants.push(name.to_string());
             <span class="kw">let </span><span class="kw-2">mut </span>types = <span class="macro">vec!</span>[];
             <span class="kw">match </span><span class="kw-2">&amp;</span>variant.fields {
-                Fields::Named(_f) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;named types not implemented&quot;</span>),
+                Fields::Named(_f) =&gt; <span class="macro">panic!</span>(<span class="string">"named types not implemented"</span>),
                 Fields::Unnamed(fields) =&gt; {
                     <span class="kw">for </span>field <span class="kw">in </span><span class="kw-2">&amp;</span>fields.unnamed {
                         <span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = is_generic(<span class="kw-2">&amp;</span>generics_str, <span class="kw-2">&amp;</span>field.ty) {
-                            types.push(<span class="macro">format!</span>(<span class="string">&quot;&#39;{}&quot;</span>, ty.to_case(Case::Snake)));
+                            types.push(<span class="macro">format!</span>(<span class="string">"'{}"</span>, ty.to_case(Case::Snake)));
                         } <span class="kw">else </span>{
-                            types.push(<span class="string">&quot;#&quot;</span>.to_string());
+                            types.push(<span class="string">"#"</span>.to_string());
                             fields_to_call.push(<span class="kw-2">&amp;</span>field.ty);
                         }
                     }
@@ -1015,25 +1015,25 @@
             <span class="kw">for </span>(name, types) <span class="kw">in </span>variants.into_iter().zip(punctured_types) {
                 <span class="kw">let </span><span class="kw-2">mut </span>fields = <span class="macro">vec!</span>[];
                 <span class="kw">for </span>ty <span class="kw">in </span>types {
-                    <span class="kw">if </span>ty != <span class="string">&quot;#&quot; </span>{
+                    <span class="kw">if </span>ty != <span class="string">"#" </span>{
                         fields.push(ty.to_string());
                     } <span class="kw">else </span>{
                         <span class="kw">let </span>ty = missing_types
                             .pop()
-                            .expect(<span class="string">&quot;number of types to call should match number of missing types&quot;</span>);
+                            .expect(<span class="string">"number of types to call should match number of missing types"</span>);
                         fields.push(ty);
                     }
                 }
 
-                <span class="comment">// example: type &#39;a t = Infinity | Finite of &#39;a
+                <span class="comment">// example: type 'a t = Infinity | Finite of 'a
                 </span><span class="kw">let </span>tag = <span class="kw">if </span>fields.is_empty() {
                     name.to_string()
                 } <span class="kw">else </span>{
-                    <span class="macro">format!</span>(<span class="string">&quot;{} of {}&quot;</span>, name, fields.join(<span class="string">&quot; * &quot;</span>))
+                    <span class="macro">format!</span>(<span class="string">"{} of {}"</span>, name, fields.join(<span class="string">" * "</span>))
                 };
                 generics_ocaml.push(tag);
             }
-            <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, generics_ocaml.join(<span class="string">&quot; | &quot;</span>))
+            <span class="macro">format!</span>(<span class="string">"{}"</span>, generics_ocaml.join(<span class="string">" | "</span>))
         }
     };
 
@@ -1042,7 +1042,7 @@
     <span class="kw">let </span>ocaml_binding = <span class="macro">quote! </span>{
         <span class="kw">fn </span>ocaml_binding(
             env: <span class="kw-2">&amp;mut </span>::ocaml_gen::Env,
-            rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+            rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
             new_type: bool,
         ) -&gt; String {
             <span class="comment">// register the new type
@@ -1060,9 +1060,9 @@
             <span class="kw">let </span>name = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::ocaml_desc(env, <span class="kw-2">&amp;</span>global_generics);
 
             <span class="kw">if </span>new_type {
-                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, name, generics_ocaml)
+                <span class="macro">format!</span>(<span class="string">"type nonrec {} = {}"</span>, name, generics_ocaml)
             } <span class="kw">else </span>{
-                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, rename.expect(<span class="string">&quot;type alias must have a name&quot;</span>), name)
+                <span class="macro">format!</span>(<span class="string">"type nonrec {} = {}"</span>, rename.expect(<span class="string">"type alias must have a name"</span>), name)
             }
         }
     };
@@ -1077,7 +1077,7 @@
     </span><span class="kw">let </span><span class="kw-2">mut </span>extended_generics = item_enum.generics.clone();
     extended_generics.make_where_clause();
     <span class="kw">let </span><span class="kw-2">mut </span>extended_where_clause = extended_generics.where_clause.unwrap();
-    <span class="kw">let </span>path: syn::Path = syn::parse_str(<span class="string">&quot;::ocaml_gen::OCamlDesc&quot;</span>).unwrap();
+    <span class="kw">let </span>path: syn::Path = syn::parse_str(<span class="string">"::ocaml_gen::OCamlDesc"</span>).unwrap();
     <span class="kw">let </span>impl_ocaml_desc = TraitBound {
         paren_token: <span class="prelude-val">None</span>,
         modifier: TraitBoundModifier::None,
@@ -1142,7 +1142,7 @@
 </span><span class="attr">#[proc_macro_derive(Struct)]
 </span><span class="kw">pub fn </span>derive_ocaml_gen(item: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>item_struct: syn::ItemStruct =
-        syn::parse(item).expect(<span class="string">&quot;only structs are supported with Struct&quot;</span>);
+        syn::parse(item).expect(<span class="string">"only structs are supported with Struct"</span>);
     <span class="kw">let </span>name = <span class="kw-2">&amp;</span>item_struct.ident;
     <span class="kw">let </span>generics = <span class="kw-2">&amp;</span>item_struct.generics.params;
     <span class="kw">let </span>fields = <span class="kw-2">&amp;</span>item_struct.fields;
@@ -1179,7 +1179,7 @@
             </span><span class="kw">if </span>generics_ocaml.is_empty() || aliased {
                 name.to_string()
             } <span class="kw">else </span>{
-                <span class="macro">format!</span>(<span class="string">&quot;({}) {}&quot;</span>, generics_ocaml.join(<span class="string">&quot;, &quot;</span>), name)
+                <span class="macro">format!</span>(<span class="string">"({}) {}"</span>, generics_ocaml.join(<span class="string">", "</span>), name)
             }
         }
     };
@@ -1212,12 +1212,12 @@
             <span class="kw">let </span><span class="kw-2">mut </span>punctured_generics_type: Vec&lt;String&gt; = <span class="macro">vec!</span>[];
             <span class="kw">let </span><span class="kw-2">mut </span>fields_to_call = <span class="macro">vec!</span>[];
             <span class="kw">for </span>field <span class="kw">in </span><span class="kw-2">&amp;</span>fields.named {
-                <span class="kw">let </span>name = field.ident.as_ref().expect(<span class="string">&quot;a named field has an ident&quot;</span>);
+                <span class="kw">let </span>name = field.ident.as_ref().expect(<span class="string">"a named field has an ident"</span>);
                 punctured_generics_name.push(name.to_string());
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = is_generic(<span class="kw-2">&amp;</span>generics_str, <span class="kw-2">&amp;</span>field.ty) {
-                    punctured_generics_type.push(<span class="macro">format!</span>(<span class="string">&quot;&#39;{}&quot;</span>, ty.to_case(Case::Snake)));
+                    punctured_generics_type.push(<span class="macro">format!</span>(<span class="string">"'{}"</span>, ty.to_case(Case::Snake)));
                 } <span class="kw">else </span>{
-                    punctured_generics_type.push(<span class="string">&quot;#&quot;</span>.to_string());
+                    punctured_generics_type.push(<span class="string">"#"</span>.to_string());
                     fields_to_call.push(<span class="kw-2">&amp;</span>field.ty);
                 }
             }
@@ -1240,16 +1240,16 @@
                 );*
 
                 <span class="kw">for </span>(name, ty) <span class="kw">in </span>punctured_generics_name.into_iter().zip(punctured_generics_type) {
-                    <span class="kw">if </span>ty != <span class="string">&quot;#&quot; </span>{
+                    <span class="kw">if </span>ty != <span class="string">"#" </span>{
                         generics_ocaml.push(
-                            <span class="macro">format!</span>(<span class="string">&quot;{}: {}&quot;</span>, name, ty.to_string())
+                            <span class="macro">format!</span>(<span class="string">"{}: {}"</span>, name, ty.to_string())
                         );
                     } <span class="kw">else </span>{
                         <span class="kw">let </span>ty = missing_types
                             .pop()
-                            .expect(<span class="string">&quot;number of types to call should match number of missing types&quot;</span>);
+                            .expect(<span class="string">"number of types to call should match number of missing types"</span>);
                         generics_ocaml.push(
-                            <span class="macro">format!</span>(<span class="string">&quot;{}: {}&quot;</span>, name, ty)
+                            <span class="macro">format!</span>(<span class="string">"{}: {}"</span>, name, ty)
                         );
                     }
                 }
@@ -1257,10 +1257,10 @@
                 <span class="comment">// See https://v2.ocaml.org/manual/attributes.html for boxing/unboxing
                 </span><span class="kw">if </span>generics_ocaml.len() == <span class="number">1 </span>{
                     <span class="comment">// Tell the OCaml compiler to not unbox records of size 1
-                    </span><span class="macro">format!</span>(<span class="string">&quot;{{ {} }} [@@boxed]&quot;</span>, generics_ocaml[<span class="number">0</span>])
+                    </span><span class="macro">format!</span>(<span class="string">"{{ {} }} [@@boxed]"</span>, generics_ocaml[<span class="number">0</span>])
                 } <span class="kw">else </span>{
                     <span class="comment">// OCaml does not unbox records with 2+ fields, so the annotation is unnecessary
-                    </span><span class="macro">format!</span>(<span class="string">&quot;{{ {} }}&quot;</span>, generics_ocaml.join(<span class="string">&quot;; &quot;</span>))
+                    </span><span class="macro">format!</span>(<span class="string">"{{ {} }}"</span>, generics_ocaml.join(<span class="string">"; "</span>))
                 }
 
             }
@@ -1270,9 +1270,9 @@
             <span class="kw">let </span><span class="kw-2">mut </span>fields_to_call = <span class="macro">vec!</span>[];
             <span class="kw">for </span>field <span class="kw">in </span><span class="kw-2">&amp;</span>fields.unnamed {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(ident) = is_generic(<span class="kw-2">&amp;</span>generics_str, <span class="kw-2">&amp;</span>field.ty) {
-                    punctured_generics.push(<span class="macro">format!</span>(<span class="string">&quot;&#39;{}&quot;</span>, ident.to_case(Case::Snake)));
+                    punctured_generics.push(<span class="macro">format!</span>(<span class="string">"'{}"</span>, ident.to_case(Case::Snake)));
                 } <span class="kw">else </span>{
-                    punctured_generics.push(<span class="string">&quot;#&quot;</span>.to_string());
+                    punctured_generics.push(<span class="string">"#"</span>.to_string());
                     fields_to_call.push(<span class="kw-2">&amp;</span>field.ty);
                 }
             }
@@ -1291,30 +1291,30 @@
                 );*
 
                 <span class="kw">for </span>ty <span class="kw">in </span>punctured_generics {
-                    <span class="kw">if </span>ty != <span class="string">&quot;#&quot; </span>{
+                    <span class="kw">if </span>ty != <span class="string">"#" </span>{
                         generics_ocaml.push(ty.to_string());
                     } <span class="kw">else </span>{
                         <span class="kw">let </span>ident = missing_types
                             .pop()
-                            .expect(<span class="string">&quot;number of types to call should match number of missing types&quot;</span>);
+                            .expect(<span class="string">"number of types to call should match number of missing types"</span>);
                         generics_ocaml.push(ident);
                     }
                 }
 
-                <span class="comment">// when there&#39;s a single element,
+                <span class="comment">// when there's a single element,
                 // this will produce something like this:
                 //
                 // ```
-                // type (&#39;field) scalar_challenge =  { inner: &#39;field } [@@boxed]
+                // type ('field) scalar_challenge =  { inner: 'field } [@@boxed]
                 // ```
                 </span><span class="kw">if </span>generics_ocaml.len() == <span class="number">1 </span>{
-                    <span class="macro">format!</span>(<span class="string">&quot;{{ inner: {} }} [@@boxed]&quot;</span>, generics_ocaml[<span class="number">0</span>])
+                    <span class="macro">format!</span>(<span class="string">"{{ inner: {} }} [@@boxed]"</span>, generics_ocaml[<span class="number">0</span>])
                 } <span class="kw">else </span>{
-                    generics_ocaml.join(<span class="string">&quot; * &quot;</span>)
+                    generics_ocaml.join(<span class="string">" * "</span>)
                 }
             }
         }
-        Fields::Unit =&gt; <span class="macro">panic!</span>(<span class="string">&quot;only named, and unnamed field supported&quot;</span>),
+        Fields::Unit =&gt; <span class="macro">panic!</span>(<span class="string">"only named, and unnamed field supported"</span>),
     };
 
     <span class="kw">let </span>ocaml_name = rust_ident_to_ocaml(<span class="kw-2">&amp;</span>name_str);
@@ -1322,7 +1322,7 @@
     <span class="kw">let </span>ocaml_binding = <span class="macro">quote! </span>{
         <span class="kw">fn </span>ocaml_binding(
             env: <span class="kw-2">&amp;mut </span>::ocaml_gen::Env,
-            rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+            rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
             new_type: bool,
         ) -&gt; String {
             <span class="comment">// register the new type
@@ -1341,13 +1341,13 @@
             <span class="kw">let </span>name = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::ocaml_desc(env, <span class="kw-2">&amp;</span>global_generics);
 
             <span class="kw">if </span>new_type {
-                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, name, generics_ocaml)
+                <span class="macro">format!</span>(<span class="string">"type nonrec {} = {}"</span>, name, generics_ocaml)
             } <span class="kw">else </span>{
                 <span class="comment">// add the alias
-                </span><span class="kw">let </span>ty_name = rename.expect(<span class="string">&quot;bug in ocaml-gen: rename should be Some&quot;</span>);
+                </span><span class="kw">let </span>ty_name = rename.expect(<span class="string">"bug in ocaml-gen: rename should be Some"</span>);
                 env.add_alias(ty_id, ty_name);
 
-                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, ty_name, name)
+                <span class="macro">format!</span>(<span class="string">"type nonrec {} = {}"</span>, ty_name, name)
             }
         }
     };
@@ -1362,7 +1362,7 @@
     </span><span class="kw">let </span><span class="kw-2">mut </span>extended_generics = item_struct.generics.clone();
     extended_generics.make_where_clause();
     <span class="kw">let </span><span class="kw-2">mut </span>extended_where_clause = extended_generics.where_clause.unwrap();
-    <span class="kw">let </span>path: syn::Path = syn::parse_str(<span class="string">&quot;::ocaml_gen::OCamlDesc&quot;</span>).unwrap();
+    <span class="kw">let </span>path: syn::Path = syn::parse_str(<span class="string">"::ocaml_gen::OCamlDesc"</span>).unwrap();
     <span class="kw">let </span>impl_ocaml_desc = TraitBound {
         paren_token: <span class="prelude-val">None</span>,
         modifier: TraitBoundModifier::None,
@@ -1424,7 +1424,7 @@
 </span><span class="attr">#[proc_macro_derive(CustomType)]
 </span><span class="kw">pub fn </span>derive_ocaml_custom(item: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>item_struct: syn::ItemStruct =
-        syn::parse(item).expect(<span class="string">&quot;only structs are supported at the moment&quot;</span>);
+        syn::parse(item).expect(<span class="string">"only structs are supported at the moment"</span>);
     <span class="kw">let </span>name = <span class="kw-2">&amp;</span>item_struct.ident;
 
     <span class="comment">//
@@ -1459,7 +1459,7 @@
     <span class="kw">let </span>ocaml_binding = <span class="macro">quote! </span>{
         <span class="kw">fn </span>ocaml_binding(
             env: <span class="kw-2">&amp;mut </span>::ocaml_gen::Env,
-            rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+            rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
             new_type: bool,
         ) -&gt; String {
             <span class="comment">// register the new type
@@ -1473,13 +1473,13 @@
             <span class="kw">let </span>name = &lt;<span class="self">Self </span><span class="kw">as </span>::ocaml_gen::OCamlDesc&gt;::ocaml_desc(env, <span class="kw-2">&amp;</span>[]);
 
             <span class="kw">if </span>new_type {
-                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {}&quot;</span>, name)
+                <span class="macro">format!</span>(<span class="string">"type nonrec {}"</span>, name)
             } <span class="kw">else </span>{
                 <span class="comment">// add the alias
-                </span><span class="kw">let </span>ty_name = rename.expect(<span class="string">&quot;bug in ocaml-gen: rename should be Some&quot;</span>);
+                </span><span class="kw">let </span>ty_name = rename.expect(<span class="string">"bug in ocaml-gen: rename should be Some"</span>);
                 env.add_alias(ty_id, ty_name);
 
-                <span class="macro">format!</span>(<span class="string">&quot;type nonrec {} = {}&quot;</span>, ty_name, name)
+                <span class="macro">format!</span>(<span class="string">"type nonrec {} = {}"</span>, ty_name, name)
             }
         }
     };

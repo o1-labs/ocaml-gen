@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `ocaml-gen/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-f40c346f39d9abc1.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ocaml_gen" data-themes="" data-resource-suffix="" data-rustdoc-version="1.72.0-nightly (065a1f5df 2023-06-21)" data-search-js="search-95c92dd01058facf.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-190c35055d2a8300.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../ocaml_gen/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `ocaml-gen/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e883e87179a81222.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ocaml_gen" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (de686cbc6 2023-12-14)" data-channel="nightly" data-search-js="search-874d56868bf05518.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-bc37acceda91d44a.js"></script><script defer src="../../static.files/src-script-1a1b62b930d385c3.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -326,7 +326,7 @@
 <a href="#326" id="326">326</a>
 <a href="#327" id="327">327</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(missing_docs)]
-#![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]
+#![doc = <span class="macro">include_str!</span>(<span class="string">"../README.md"</span>)]
 
 </span><span class="kw">extern crate </span>ocaml_gen_derive;
 <span class="kw">use </span>std::collections::{hash_map::Entry, HashMap};
@@ -361,21 +361,21 @@
 </span><span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>Env {
     <span class="doccomment">/// every type (their path and their name) is stored here at declaration
-    </span>locations: HashMap&lt;u128, (Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str)&gt;,
+    </span>locations: HashMap&lt;u128, (Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str)&gt;,
 
-    <span class="doccomment">/// the current path we&#39;re in (e.g. `ModA.ModB`)
-    </span>current_module: Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    <span class="doccomment">/// the current path we're in (e.g. `ModA.ModB`)
+    </span>current_module: Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
 
     <span class="doccomment">/// list of aliases. When entering a module, the vec is extended.
     /// When exiting a module, the vec is poped.
     /// This way, aliases are kept within their own modules.
-    </span>aliases: Vec&lt;HashMap&lt;u128, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;&gt;,
+    </span>aliases: Vec&lt;HashMap&lt;u128, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;&gt;,
 }
 
 <span class="kw">impl </span>Drop <span class="kw">for </span>Env {
     <span class="doccomment">/// This makes sure that we close our OCaml modules (with the keyword `end`).
     </span><span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="macro">assert!</span>(<span class="self">self</span>.current_module.is_empty(), <span class="string">&quot;you must call .root() on the environment to finalize the generation. You are currently still nested: {:?}&quot;</span>, <span class="self">self</span>.current_module);
+        <span class="macro">assert!</span>(<span class="self">self</span>.current_module.is_empty(), <span class="string">"you must call .root() on the environment to finalize the generation. You are currently still nested: {:?}"</span>, <span class="self">self</span>.current_module);
     }
 }
 
@@ -400,9 +400,9 @@
     ///
     /// # Panics
     /// The function will panic if the type was already declared.
-    </span><span class="kw">pub fn </span>new_type(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ty: u128, name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) {
+    </span><span class="kw">pub fn </span>new_type(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ty: u128, name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) {
         <span class="kw">match </span><span class="self">self</span>.locations.entry(ty) {
-            Entry::Occupied(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;ocaml-gen: cannot re-declare the same type twice&quot;</span>),
+            Entry::Occupied(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">"ocaml-gen: cannot re-declare the same type twice"</span>),
             Entry::Vacant(v) =&gt; v.insert((<span class="self">self</span>.current_module.clone(), name)),
         };
     }
@@ -418,7 +418,7 @@
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(alias) = <span class="self">self
             </span>.aliases
             .last()
-            .expect(<span class="string">&quot;ocaml-gen bug: bad initialization of aliases&quot;</span>)
+            .expect(<span class="string">"ocaml-gen bug: bad initialization of aliases"</span>)
             .get(<span class="kw-2">&amp;</span>ty)
         {
             <span class="kw">return </span>((<span class="kw-2">*</span>alias).to_string(), <span class="bool-val">true</span>);
@@ -428,7 +428,7 @@
         </span><span class="kw">let </span>(type_path, type_name) = <span class="self">self
             </span>.locations
             .get(<span class="kw-2">&amp;</span>ty)
-            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;ocaml-gen: the type {name} hasn&#39;t been declared&quot;</span>));
+            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">"ocaml-gen: the type {name} hasn't been declared"</span>));
 
         <span class="comment">// path resolution
         </span><span class="kw">let </span><span class="kw-2">mut </span>current = <span class="self">self</span>.current_module.clone();
@@ -442,7 +442,7 @@
         <span class="kw">let </span>name = <span class="kw">if </span>path.is_empty() {
             (<span class="kw-2">*</span>type_name).to_string()
         } <span class="kw">else </span>{
-            <span class="macro">format!</span>(<span class="string">&quot;{}.{}&quot;</span>, path.join(<span class="string">&quot;.&quot;</span>), type_name)
+            <span class="macro">format!</span>(<span class="string">"{}.{}"</span>, path.join(<span class="string">"."</span>), type_name)
         };
 
         (name, <span class="bool-val">false</span>)
@@ -452,15 +452,15 @@
     ///
     /// # Panics
     /// The function will panic if the alias was already declared.
-    </span><span class="kw">pub fn </span>add_alias(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ty: u128, alias: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) {
+    </span><span class="kw">pub fn </span>add_alias(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ty: u128, alias: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) {
         <span class="kw">let </span>res = <span class="self">self
             </span>.aliases
             .last_mut()
-            .expect(<span class="string">&quot;bug in ocaml-gen: the Env initializer is broken&quot;</span>)
+            .expect(<span class="string">"bug in ocaml-gen: the Env initializer is broken"</span>)
             .insert(ty, alias);
         <span class="macro">assert!</span>(
             res.is_none(),
-            <span class="string">&quot;ocaml-gen: cannot re-declare the same alias twice&quot;
+            <span class="string">"ocaml-gen: cannot re-declare the same alias twice"
         </span>);
     }
 
@@ -469,14 +469,14 @@
     /// # Panics
     /// This function will panic if the module was already declared,
     /// or if the module name is not following the OCaml guidelines.
-    </span><span class="kw">pub fn </span>new_module(<span class="kw-2">&amp;mut </span><span class="self">self</span>, mod_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; String {
+    </span><span class="kw">pub fn </span>new_module(<span class="kw-2">&amp;mut </span><span class="self">self</span>, mod_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; String {
         <span class="kw">let </span>first_letter = mod_name
             .chars()
             .next()
-            .expect(<span class="string">&quot;module name cannot be empty&quot;</span>);
+            .expect(<span class="string">"module name cannot be empty"</span>);
         <span class="macro">assert!</span>(
             first_letter.to_uppercase().to_string() == first_letter.to_string(),
-            <span class="string">&quot;ocaml-gen: OCaml module names start with an uppercase, you provided: {mod_name}&quot;
+            <span class="string">"ocaml-gen: OCaml module names start with an uppercase, you provided: {mod_name}"
         </span>);
 
         <span class="comment">// nest into the aliases vector
@@ -485,7 +485,7 @@
         <span class="comment">// create a module
         </span><span class="self">self</span>.current_module.push(mod_name);
 
-        <span class="macro">format!</span>(<span class="string">&quot;module {mod_name} = struct &quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"module {mod_name} = struct "</span>)
     }
 
     <span class="doccomment">/// how deeply nested are we currently? (default is 0)
@@ -502,15 +502,15 @@
         <span class="comment">// go back up one module
         </span><span class="self">self</span>.current_module
             .pop()
-            .expect(<span class="string">&quot;ocaml-gen: you are already at the root&quot;</span>);
-        <span class="string">&quot;end&quot;</span>.to_string()
+            .expect(<span class="string">"ocaml-gen: you are already at the root"</span>);
+        <span class="string">"end"</span>.to_string()
     }
 
     <span class="doccomment">/// you can call this to go back to the root and finalize the generation
     </span><span class="kw">pub fn </span>root(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; String {
         <span class="kw">let </span><span class="kw-2">mut </span>res = String::new();
         <span class="kw">for _ in </span><span class="kw-2">&amp;</span><span class="self">self</span>.current_module {
-            res.push_str(<span class="string">&quot;end\n&quot;</span>);
+            res.push_str(<span class="string">"end\n"</span>);
         }
         res
     }
@@ -528,7 +528,7 @@
     <span class="doccomment">/// will generate the OCaml bindings for a type (called root type).
     /// It takes the current environment [Env],
     /// as well as an optional name (if you wish to rename the type in OCaml).
-    </span><span class="kw">fn </span>ocaml_binding(env: <span class="kw-2">&amp;mut </span>Env, rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;, new_type: bool) -&gt; String;
+    </span><span class="kw">fn </span>ocaml_binding(env: <span class="kw-2">&amp;mut </span>Env, rename: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;, new_type: bool) -&gt; String;
 }
 
 <span class="doccomment">/// `OCamlDesc` is the trait implemented by types to facilitate generation of their OCaml bindings.
@@ -553,9 +553,9 @@
 </span><span class="macro">macro_rules! </span>decl_module {
     (<span class="macro-nonterminal">$w</span>:expr, <span class="macro-nonterminal">$env</span>:expr, <span class="macro-nonterminal">$name</span>:expr, <span class="macro-nonterminal">$b</span>:block) =&gt; {{
         <span class="kw">use </span>std::io::Write;
-        <span class="macro">write!</span>(<span class="macro-nonterminal">$w</span>, <span class="string">&quot;\n{}{}\n&quot;</span>, <span class="macro">format_args!</span>(<span class="string">&quot;{: &gt;1$}&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>), <span class="macro-nonterminal">$env</span>.new_module(<span class="macro-nonterminal">$name</span>)).unwrap();
+        <span class="macro">write!</span>(<span class="macro-nonterminal">$w</span>, <span class="string">"\n{}{}\n"</span>, <span class="macro">format_args!</span>(<span class="string">"{: &gt;1$}"</span>, <span class="string">""</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>), <span class="macro-nonterminal">$env</span>.new_module(<span class="macro-nonterminal">$name</span>)).unwrap();
         <span class="macro-nonterminal">$b
-        </span><span class="macro">write!</span>(<span class="macro-nonterminal">$w</span>, <span class="string">&quot;{}{}\n\n&quot;</span>, <span class="macro">format_args!</span>(<span class="string">&quot;{: &gt;1$}&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2 </span>- <span class="number">2</span>), <span class="macro-nonterminal">$env</span>.parent()).unwrap();
+        </span><span class="macro">write!</span>(<span class="macro-nonterminal">$w</span>, <span class="string">"{}{}\n\n"</span>, <span class="macro">format_args!</span>(<span class="string">"{: &gt;1$}"</span>, <span class="string">""</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2 </span>- <span class="number">2</span>), <span class="macro-nonterminal">$env</span>.parent()).unwrap();
     }}
 }
 
@@ -569,8 +569,8 @@
         }
         <span class="macro">write!</span>(
             <span class="macro-nonterminal">$w</span>,
-            <span class="string">&quot;{}{}\n&quot;</span>,
-            <span class="macro">format_args!</span>(<span class="string">&quot;{: &gt;1$}&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
+            <span class="string">"{}{}\n"</span>,
+            <span class="macro">format_args!</span>(<span class="string">"{: &gt;1$}"</span>, <span class="string">""</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
             binding,
         )
         .unwrap();
@@ -583,8 +583,8 @@
         }
         <span class="macro">write!</span>(
             <span class="macro-nonterminal">$w</span>,
-            <span class="string">&quot;{}{}\n&quot;</span>,
-            <span class="macro">format_args!</span>(<span class="string">&quot;{: &gt;1$}&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
+            <span class="string">"{}{}\n"</span>,
+            <span class="macro">format_args!</span>(<span class="string">"{: &gt;1$}"</span>, <span class="string">""</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
             binding,
         )
         .unwrap();
@@ -599,8 +599,8 @@
         <span class="kw">let </span>res = &lt;<span class="macro-nonterminal">$ty </span><span class="kw">as </span>::ocaml_gen::OCamlBinding&gt;::ocaml_binding(<span class="macro-nonterminal">$env</span>, <span class="prelude-val">None</span>, <span class="bool-val">true</span>);
         <span class="macro">write!</span>(
             <span class="macro-nonterminal">$w</span>,
-            <span class="string">&quot;{}{}\n&quot;</span>,
-            <span class="macro">format_args!</span>(<span class="string">&quot;{: &gt;1$}&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
+            <span class="string">"{}{}\n"</span>,
+            <span class="macro">format_args!</span>(<span class="string">"{: &gt;1$}"</span>, <span class="string">""</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
             res,
         )
         .unwrap();
@@ -611,8 +611,8 @@
         <span class="kw">let </span>res = &lt;<span class="macro-nonterminal">$ty </span><span class="kw">as </span>::ocaml_gen::OCamlBinding&gt;::ocaml_binding(<span class="macro-nonterminal">$env</span>, <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$new</span>), <span class="bool-val">true</span>);
         <span class="macro">write!</span>(
             <span class="macro-nonterminal">$w</span>,
-            <span class="string">&quot;{}{}\n&quot;</span>,
-            <span class="macro">format_args!</span>(<span class="string">&quot;{: &gt;1$}&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
+            <span class="string">"{}{}\n"</span>,
+            <span class="macro">format_args!</span>(<span class="string">"{: &gt;1$}"</span>, <span class="string">""</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
             res,
         )
         .unwrap();
@@ -627,8 +627,8 @@
         <span class="kw">let </span>res = &lt;<span class="macro-nonterminal">$ty </span><span class="kw">as </span>::ocaml_gen::OCamlBinding&gt;::ocaml_binding(<span class="macro-nonterminal">$env</span>, <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$new</span>), <span class="bool-val">false</span>);
         <span class="macro">write!</span>(
             <span class="macro-nonterminal">$w</span>,
-            <span class="string">&quot;{}{}\n&quot;</span>,
-            <span class="macro">format_args!</span>(<span class="string">&quot;{: &gt;1$}&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
+            <span class="string">"{}{}\n"</span>,
+            <span class="macro">format_args!</span>(<span class="string">"{: &gt;1$}"</span>, <span class="string">""</span>, <span class="macro-nonterminal">$env</span>.nested() * <span class="number">2</span>),
             res,
         )
         .unwrap();
@@ -643,7 +643,7 @@
 
         <span class="kw">impl </span>::ocaml_gen::OCamlDesc <span class="kw">for </span><span class="macro-nonterminal">$name </span>{
             <span class="kw">fn </span>ocaml_desc(_env: <span class="kw-2">&amp;</span>::ocaml_gen::Env, generics: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; String {
-                <span class="macro">format!</span>(<span class="string">&quot;&#39;{}&quot;</span>, generics[<span class="macro-nonterminal">$i</span>])
+                <span class="macro">format!</span>(<span class="string">"'{}"</span>, generics[<span class="macro-nonterminal">$i</span>])
             }
 
             <span class="kw">fn </span>unique_id() -&gt; u128 {

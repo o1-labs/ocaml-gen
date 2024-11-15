@@ -123,9 +123,39 @@ impl OCamlDesc for usize {
     }
 }
 
+impl OCamlDesc for isize {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "int".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
 impl OCamlDesc for ocaml::Int {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "int".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
+impl OCamlDesc for f32 {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "float".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
+impl OCamlDesc for f64 {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "float".to_string()
     }
 
     fn unique_id() -> u128 {
@@ -156,6 +186,16 @@ impl OCamlDesc for bool {
 impl OCamlDesc for i32 {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "int32".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
+impl OCamlDesc for i64 {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "int64".to_string()
     }
 
     fn unique_id() -> u128 {

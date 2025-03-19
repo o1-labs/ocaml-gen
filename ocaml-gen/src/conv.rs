@@ -172,7 +172,7 @@ where
     T2: OCamlDesc,
 {
     fn ocaml_desc(env: &Env, generics: &[&str]) -> String {
-        let v = vec![T1::ocaml_desc(env, generics), T2::ocaml_desc(env, generics)];
+        let v = [T1::ocaml_desc(env, generics), T2::ocaml_desc(env, generics)];
         format!("({})", v.join(" * "))
     }
 
@@ -217,7 +217,7 @@ where
     T15: OCamlDesc,
 {
     fn ocaml_desc(env: &Env, generics: &[&str]) -> String {
-        let v = vec![
+        let v = [
             T1::ocaml_desc(env, generics),
             T2::ocaml_desc(env, generics),
             T3::ocaml_desc(env, generics),
@@ -252,7 +252,7 @@ where
     T6: OCamlDesc,
 {
     fn ocaml_desc(env: &Env, generics: &[&str]) -> String {
-        let v = vec![
+        let v = [
             T1::ocaml_desc(env, generics),
             T2::ocaml_desc(env, generics),
             T3::ocaml_desc(env, generics),
@@ -279,7 +279,7 @@ where
     T7: OCamlDesc,
 {
     fn ocaml_desc(env: &Env, generics: &[&str]) -> String {
-        let v = vec![
+        let v = [
             T1::ocaml_desc(env, generics),
             T2::ocaml_desc(env, generics),
             T3::ocaml_desc(env, generics),
@@ -303,7 +303,7 @@ where
     T3: OCamlDesc,
 {
     fn ocaml_desc(env: &Env, generics: &[&str]) -> String {
-        let v = vec![
+        let v = [
             T1::ocaml_desc(env, generics),
             T2::ocaml_desc(env, generics),
             T3::ocaml_desc(env, generics),

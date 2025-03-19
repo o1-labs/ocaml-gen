@@ -4,6 +4,7 @@ members = [
     "ocaml-gen/derive",
     "tests/ocamlgen_test_stubs"
 ]
+resolver = "2"
 
 [workspace.dependencies]
 convert_case = "0.6.0"

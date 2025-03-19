@@ -59,7 +59,7 @@ jobs:
       - name: Setup OCaml dependencies
         run: |
           eval $(opam env)
-          opam install . --deps-only --with-test
+          make setup-ocaml-deps
 
       - name: List OCaml and Rust versions
         run: |
@@ -72,21 +72,16 @@ jobs:
       # Coding guidelines
       #
 
-      - name: Enforce Rust formatting
+      - name: Enforce Rust and OCaml formatting
         run: |
             eval $(opam env)
-            cargo run fmt -- --check
+            cargo install cargo-sort
+            make check-format
 
       - name: Lint (clippy)
         run: |
             eval $(opam env)
-            cargo run clippy --all -- -D warnings
-
-      - name: Enforce OCaml formatting
-        run: |
-          eval $(opam env)
-          opam install ocamlformat.$(awk -F = '$1 == "version" {print $2}' .ocamlformat)
-          dune build @fmt
+            make lint
 
       #
       # OCaml (tests)

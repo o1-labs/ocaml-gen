@@ -4,7 +4,9 @@
 //! You should import [ocaml-gen](https://crates.io/crates/ocaml-gen) instead.
 //!
 //! ocaml-gen-derive adds a number of derives to make ocaml-gen easier to use.
-//! Refer to the [ocaml-gen](https://o1-labs.github.io/ocaml-gen/ocaml_gen/index.html) documentation.
+//! Refer to the
+//! [ocaml-gen](https://o1-labs.github.io/ocaml-gen/ocaml_gen/index.html)
+//! documentation.
 
 extern crate proc_macro;
 use convert_case::{Case, Casing};
@@ -16,7 +18,8 @@ use syn::{
     TraitBoundModifier, Type, TypeParamBound, TypePath, WherePredicate,
 };
 
-/// A macro to create OCaml bindings for a function that uses [`#[ocaml::func]`](https://docs.rs/ocaml/latest/ocaml/attr.func.html)
+/// A macro to create OCaml bindings for a function that uses
+/// [`#[ocaml::func]`](https://docs.rs/ocaml/latest/ocaml/attr.func.html)
 ///
 /// Note that this macro must be placed first (before `#[ocaml::func]`).
 /// For example:
@@ -112,11 +115,13 @@ pub fn func(_attribute: TokenStream, item: TokenStream) -> TokenStream {
 
 /// The Enum derive macro.
 /// It generates implementations of `ToOCaml` and `OCamlBinding` on an enum type.
-/// The type must implement [`ocaml::IntoValue`](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
-/// and [`ocaml::FromValue`](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
+/// The type must implement
+/// [`ocaml::IntoValue`](https://docs.rs/ocaml/latest/ocaml/trait.IntoValue.html)
+/// and
+/// [`ocaml::FromValue`](https://docs.rs/ocaml/latest/ocaml/trait.FromValue.html)
 /// For example:
 ///
-/// ```
+/// ```ocaml
 /// use ocaml_gen::Enum;
 ///
 /// #[Enum]
@@ -194,13 +199,15 @@ pub fn derive_ocaml_enum(item: TokenStream) -> TokenStream {
 
     let body = {
         // we want to resolve types at runtime (to do relocation/renaming)
-        // to do that, the macro builds a list of types that doesn't need to be resolved (generic types), as well as a list of types to resolve
+        // to do that, the macro builds a list of types that doesn't need to be
+        // resolved (generic types), as well as a list of types to resolve
         // at runtime, both list are consumed to generate the OCaml binding
 
         // list of variants
         let mut variants: Vec<String> = vec![];
         // list of types associated to each variant. It is punctured:
-        // an item can appear as "#" to indicate that it needs to be resolved at run-time
+        // an item can appear as "#" to indicate that it needs to be resolved at
+        // run-time
         let mut punctured_types: Vec<Vec<String>> = vec![];
         // list of types that will need to be resolved at run-time
         let mut fields_to_call = vec![];
@@ -368,7 +375,7 @@ pub fn derive_ocaml_enum(item: TokenStream) -> TokenStream {
 ///
 /// For example:
 ///
-/// ```
+/// ```ocaml
 /// #[ocaml_gen::Struct]
 /// struct MyType {
 ///   // ...
@@ -648,7 +655,7 @@ pub fn derive_ocaml_gen(item: TokenStream) -> TokenStream {
 /// Derives implementations for `OCamlDesc` and `OCamlBinding` on a custom type
 /// For example:
 ///
-/// ```
+/// ```ocaml
 /// use ocaml_gen::CustomType;
 ///
 /// #[CustomType]

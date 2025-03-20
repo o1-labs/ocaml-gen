@@ -172,7 +172,7 @@
 <a href=#172 id=172 data-nosnippet>172</a>    T2: OCamlDesc,
 <a href=#173 id=173 data-nosnippet>173</a>{
 <a href=#174 id=174 data-nosnippet>174</a>    <span class="kw">fn </span>ocaml_desc(env: <span class="kw-2">&amp;</span>Env, generics: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; String {
-<a href=#175 id=175 data-nosnippet>175</a>        <span class="kw">let </span>v = <span class="macro">vec!</span>[T1::ocaml_desc(env, generics), T2::ocaml_desc(env, generics)];
+<a href=#175 id=175 data-nosnippet>175</a>        <span class="kw">let </span>v = [T1::ocaml_desc(env, generics), T2::ocaml_desc(env, generics)];
 <a href=#176 id=176 data-nosnippet>176</a>        <span class="macro">format!</span>(<span class="string">"({})"</span>, v.join(<span class="string">" * "</span>))
 <a href=#177 id=177 data-nosnippet>177</a>    }
 <a href=#178 id=178 data-nosnippet>178</a>
@@ -217,7 +217,7 @@
 <a href=#217 id=217 data-nosnippet>217</a>    T15: OCamlDesc,
 <a href=#218 id=218 data-nosnippet>218</a>{
 <a href=#219 id=219 data-nosnippet>219</a>    <span class="kw">fn </span>ocaml_desc(env: <span class="kw-2">&amp;</span>Env, generics: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; String {
-<a href=#220 id=220 data-nosnippet>220</a>        <span class="kw">let </span>v = <span class="macro">vec!</span>[
+<a href=#220 id=220 data-nosnippet>220</a>        <span class="kw">let </span>v = [
 <a href=#221 id=221 data-nosnippet>221</a>            T1::ocaml_desc(env, generics),
 <a href=#222 id=222 data-nosnippet>222</a>            T2::ocaml_desc(env, generics),
 <a href=#223 id=223 data-nosnippet>223</a>            T3::ocaml_desc(env, generics),
@@ -252,7 +252,7 @@
 <a href=#252 id=252 data-nosnippet>252</a>    T6: OCamlDesc,
 <a href=#253 id=253 data-nosnippet>253</a>{
 <a href=#254 id=254 data-nosnippet>254</a>    <span class="kw">fn </span>ocaml_desc(env: <span class="kw-2">&amp;</span>Env, generics: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; String {
-<a href=#255 id=255 data-nosnippet>255</a>        <span class="kw">let </span>v = <span class="macro">vec!</span>[
+<a href=#255 id=255 data-nosnippet>255</a>        <span class="kw">let </span>v = [
 <a href=#256 id=256 data-nosnippet>256</a>            T1::ocaml_desc(env, generics),
 <a href=#257 id=257 data-nosnippet>257</a>            T2::ocaml_desc(env, generics),
 <a href=#258 id=258 data-nosnippet>258</a>            T3::ocaml_desc(env, generics),
@@ -279,7 +279,7 @@
 <a href=#279 id=279 data-nosnippet>279</a>    T7: OCamlDesc,
 <a href=#280 id=280 data-nosnippet>280</a>{
 <a href=#281 id=281 data-nosnippet>281</a>    <span class="kw">fn </span>ocaml_desc(env: <span class="kw-2">&amp;</span>Env, generics: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; String {
-<a href=#282 id=282 data-nosnippet>282</a>        <span class="kw">let </span>v = <span class="macro">vec!</span>[
+<a href=#282 id=282 data-nosnippet>282</a>        <span class="kw">let </span>v = [
 <a href=#283 id=283 data-nosnippet>283</a>            T1::ocaml_desc(env, generics),
 <a href=#284 id=284 data-nosnippet>284</a>            T2::ocaml_desc(env, generics),
 <a href=#285 id=285 data-nosnippet>285</a>            T3::ocaml_desc(env, generics),
@@ -303,7 +303,7 @@
 <a href=#303 id=303 data-nosnippet>303</a>    T3: OCamlDesc,
 <a href=#304 id=304 data-nosnippet>304</a>{
 <a href=#305 id=305 data-nosnippet>305</a>    <span class="kw">fn </span>ocaml_desc(env: <span class="kw-2">&amp;</span>Env, generics: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; String {
-<a href=#306 id=306 data-nosnippet>306</a>        <span class="kw">let </span>v = <span class="macro">vec!</span>[
+<a href=#306 id=306 data-nosnippet>306</a>        <span class="kw">let </span>v = [
 <a href=#307 id=307 data-nosnippet>307</a>            T1::ocaml_desc(env, generics),
 <a href=#308 id=308 data-nosnippet>308</a>            T2::ocaml_desc(env, generics),
 <a href=#309 id=309 data-nosnippet>309</a>            T3::ocaml_desc(env, generics),

@@ -33,7 +33,7 @@ jobs:
       #
 
       - name: Checkout PR
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # as action-rs does not seem to be maintained anymore, building from
       # scratch the environment using rustup
@@ -50,7 +50,7 @@ jobs:
             echo ${{ matrix.rust_toolchain_version }} > rust-toolchain
 
       - name: Setup OCaml ${{ matrix.ocaml_version }}
-        uses: ocaml/setup-ocaml@v2
+        uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: ${{ matrix.ocaml_version }}
           # https://github.com/ocaml/setup-ocaml/issues/211#issuecomment-1058882386

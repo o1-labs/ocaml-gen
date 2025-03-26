@@ -28,7 +28,8 @@ pub mod prelude {
 // Structs
 //
 
-/// The environment at some point in time during the declaration of OCaml bindings.
+/// The environment at some point in time during the declaration of OCaml
+/// bindings.
 /// It ensures that types cannot be declared twice, and that types that are
 /// renamed and/or relocated into module are referenced correctly.
 #[derive(Debug)]
@@ -46,7 +47,8 @@ pub struct Env {
 }
 
 impl Drop for Env {
-    /// This makes sure that we close our OCaml modules (with the keyword `end`).
+    /// This makes sure that we close our OCaml modules (with the keyword
+    /// `end`).
     fn drop(&mut self) {
         assert!(self.current_module.is_empty(), "you must call .root() on the environment to finalize the generation. You are currently still nested: {:?}", self.current_module);
     }
@@ -204,7 +206,8 @@ pub trait OCamlBinding {
     fn ocaml_binding(env: &mut Env, rename: Option<&'static str>, new_type: bool) -> String;
 }
 
-/// `OCamlDesc` is the trait implemented by types to facilitate generation of their OCaml bindings.
+/// `OCamlDesc` is the trait implemented by types to facilitate generation of
+/// their OCaml bindings.
 /// It is usually derived automatically via the [Struct] macro,
 /// or the [`CustomType`] macro for custom types.
 pub trait OCamlDesc {
@@ -213,7 +216,8 @@ pub trait OCamlDesc {
     /// (the type that makes use of this type)
     fn ocaml_desc(env: &Env, generics: &[&str]) -> String;
 
-    /// Returns a unique ID for the type. This ID will not change if concrete type parameters are used.
+    /// Returns a unique ID for the type. This ID will not change if concrete
+    /// type parameters are used.
     fn unique_id() -> u128;
 }
 
@@ -308,7 +312,8 @@ macro_rules! decl_type_alias {
     }};
 }
 
-/// Creates a fake generic. This is a necessary hack, at the moment, to declare types (with the [`decl_type`] macro) that have generic parameters.
+/// Creates a fake generic. This is a necessary hack, at the moment, to declare
+/// types (with the [`decl_type`] macro) that have generic parameters.
 #[macro_export]
 macro_rules! decl_fake_generic {
     ($name:ident, $i:expr) => {

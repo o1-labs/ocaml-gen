@@ -25,7 +25,8 @@ The goal of `ocaml-gen` and `ocaml-gen-derive` is to provide automatic binding
 generations and to add macros easing the development of large applications.
 It is meant to be used in conjunction with [`ocaml-rs`](https://github.com/zshipko/ocaml-rs).
 
-**SECURITY WARNING: this is still an experimental library, you should verify that the bindings generated are correct if you are using this in production**.
+**SECURITY WARNING: this is still an experimental library, you should verify
+that the bindings generated are correct if you are using this in production**.
 
 See the [ocaml-gen/README](/ocaml-gen) for more information.
 
@@ -42,18 +43,29 @@ opam install merlin ocamlformat.$(awk -F = '$1 == "version" {print $2}' .ocamlfo
 dune build @runtest
 ```
 
-If you change the file `tests/ocamlgen_test_stubs/src/bin/main.rs` or anything related to code generation, you will need to update `tests/expected_bindings.ml`. You can use:
-```
+If you change the file `tests/ocamlgen_test_stubs/src/bin/main.rs` or anything
+related to code generation, you will need to update
+`tests/expected_bindings.ml`. You can use:
+
+```shell
 dune build @runtest --auto-promote
 ```
-to rely on `dune` to update the file. You will need to commit it to make the CI happy.
+
+to rely on `dune` to update the file. You will need to commit it to make the CI
+happy.
 
 ## Organization
 
-* [ocaml-gen](ocaml-gen): the tool that allows us to generate the OCaml bindings from the Rust code.
-* [ocaml-gen-derive](ocaml-gen/derive): derive macros have to be a in separate crate, so they are here. This crate is re-exported by ocaml-gen so end users should not have to worry about it.
-* [tests/](tests/): contains some tests. If you are looking for examples on how to use ocaml-gen, you can check that folder.
+* [ocaml-gen](ocaml-gen): the tool that allows us to generate the OCaml bindings
+  from the Rust code.
+* [ocaml-gen-derive](ocaml-gen/derive): derive macros have to be a in separate
+  crate, so they are here. This crate is re-exported by ocaml-gen so end users
+  should not have to worry about it.
+* [tests/](tests/): contains some tests. If you are looking for examples on how
+  to use ocaml-gen, you can check that folder.
 
 ## Additional resources
 
-You can check the [recording](https://www.youtube.com/watch?v=LuXo2cNkgyA&feature=youtu.be) I made when I first introduced the tool internally.
+You can check the
+[recording](https://www.youtube.com/watch?v=LuXo2cNkgyA&feature=youtu.be) I made
+when I first introduced the tool internally.

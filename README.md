@@ -69,3 +69,17 @@ happy.
 You can check the
 [recording](https://www.youtube.com/watch?v=LuXo2cNkgyA&feature=youtu.be) I made
 when I first introduced the tool internally.
+
+## Publish a new release
+
+To make a new release of ocaml-gen and ocaml-gen-derive:
+
+1. Change the CHANGELOG.md to include all unreleased features into the new
+   release. Create a new empty "Unreleased" section.
+2. Change the version of `ocaml-gen-derive` in `ocaml-gen/Cargo.toml` to the new
+   release version.
+3. Create a tag with `git tag -m "VERSION" -a "x.y.z"`
+4. Push the tag with `git push --tags`
+5. Refer to
+   [cargo-publish](https://doc.rust-lang.org/cargo/commands/cargo-publish.html)
+   to update to the public registry.

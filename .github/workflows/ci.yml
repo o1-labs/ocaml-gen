@@ -24,8 +24,8 @@ jobs:
         # It might be related to boxroot dependency, and we would need to bump
         # up the ocaml-rs dependency
         ocaml_version: [4.14]
-
-    runs-on: ubuntu-latest
+        os: ["macos-latest", "ubuntu-latest"]
+    runs-on: ${{ matrix.os }}
     name: Run some basic checks and tests
     steps:
       #

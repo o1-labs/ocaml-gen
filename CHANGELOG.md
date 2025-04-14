@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 1.0.0
+
 - Support Rust up to 1.82 (https://github.com/o1-labs/ocaml-gen/pull/31,
   https://github.com/o1-labs/ocaml-gen/pull/29)
 - Dropping support for OCaml before 4.14.0 (https://github.com/o1-labs/ocaml-gen/pull/28)

@@ -1,8 +1,14 @@
 #![deny(missing_docs)]
 #![doc = include_str!("../README.md")]
+#![no_std]
 
+extern crate alloc;
 extern crate ocaml_gen_derive;
-use std::collections::{hash_map::Entry, HashMap};
+use alloc::collections::btree_map::Entry;
+use alloc::collections::BTreeMap;
+use alloc::format;
+use alloc::string::{String, ToString};
+use alloc::{vec, vec::Vec};
 
 pub use const_random::const_random;
 pub use ocaml_gen_derive::*;
@@ -35,7 +41,7 @@ pub mod prelude {
 #[derive(Debug)]
 pub struct Env {
     /// every type (their path and their name) is stored here at declaration
-    locations: HashMap<u128, (Vec<&'static str>, &'static str)>,
+    locations: BTreeMap<u128, (Vec<&'static str>, &'static str)>,
 
     /// the current path we're in (e.g. `ModA.ModB`)
     current_module: Vec<&'static str>,
@@ -43,7 +49,7 @@ pub struct Env {
     /// list of aliases. When entering a module, the vec is extended.
     /// When exiting a module, the vec is poped.
     /// This way, aliases are kept within their own modules.
-    aliases: Vec<HashMap<u128, &'static str>>,
+    aliases: Vec<BTreeMap<u128, &'static str>>,
 }
 
 impl Drop for Env {
@@ -65,9 +71,9 @@ impl Env {
     #[must_use]
     pub fn new() -> Self {
         Self {
-            locations: HashMap::new(),
+            locations: BTreeMap::new(),
             current_module: Vec::new(),
-            aliases: vec![HashMap::new()],
+            aliases: vec![BTreeMap::new()],
         }
     }
 
@@ -155,7 +161,7 @@ impl Env {
         );
 
         // nest into the aliases vector
-        self.aliases.push(HashMap::new());
+        self.aliases.push(BTreeMap::new());
 
         // create a module
         self.current_module.push(mod_name);

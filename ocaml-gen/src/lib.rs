@@ -1,9 +1,14 @@
 #![deny(missing_docs)]
 #![doc = include_str!("../README.md")]
+#![no_std]
 
+extern crate alloc;
 extern crate ocaml_gen_derive;
-use std::collections::btree_map::Entry;
-use std::collections::BTreeMap;
+use alloc::collections::btree_map::Entry;
+use alloc::collections::BTreeMap;
+use alloc::format;
+use alloc::string::{String, ToString};
+use alloc::{vec, vec::Vec};
 
 pub use const_random::const_random;
 pub use ocaml_gen_derive::*;

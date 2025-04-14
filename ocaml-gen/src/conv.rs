@@ -13,6 +13,11 @@
 use crate::{Env, OCamlDesc};
 use const_random::const_random;
 
+extern crate alloc;
+use alloc::format;
+use alloc::string::{String, ToString};
+use alloc::vec::Vec;
+
 impl OCamlDesc for () {
     fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
         "unit".to_string()

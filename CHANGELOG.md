@@ -3,6 +3,7 @@
 - Support Rust up to 1.82 (https://github.com/o1-labs/ocaml-gen/pull/31,
   https://github.com/o1-labs/ocaml-gen/pull/29)
 - Dropping support for OCaml before 4.14.0 (https://github.com/o1-labs/ocaml-gen/pull/28)
+- Provide a no-std support (https://github.com/o1-labs/ocaml-gen/pull/40)
 
 ### MISC
 

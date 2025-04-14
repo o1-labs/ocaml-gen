@@ -13,4 +13,4 @@ const-random = "*"
 paste = "*"
 proc-macro2 = "*"
 quote = "*"
-syn = { version = "*", features = ["full"] }
+syn = { version = "2", features = ["full"] }

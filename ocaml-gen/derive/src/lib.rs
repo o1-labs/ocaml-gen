@@ -329,7 +329,7 @@ pub fn derive_ocaml_enum(item: TokenStream) -> TokenStream {
     };
     for generic in &item_enum.generics.params {
         if let GenericParam::Type(t) = generic {
-            let mut bounds = Punctuated::<TypeParamBound, syn::token::Add>::new();
+            let mut bounds = Punctuated::<TypeParamBound, syn::token::Plus>::new();
             bounds.push(TypeParamBound::Trait(impl_ocaml_desc.clone()));
 
             let path: syn::Path = syn::parse_str(&t.ident.to_string()).unwrap();
@@ -614,7 +614,7 @@ pub fn derive_ocaml_gen(item: TokenStream) -> TokenStream {
     };
     for generic in generics {
         if let GenericParam::Type(t) = generic {
-            let mut bounds = Punctuated::<TypeParamBound, syn::token::Add>::new();
+            let mut bounds = Punctuated::<TypeParamBound, syn::token::Plus>::new();
             bounds.push(TypeParamBound::Trait(impl_ocaml_desc.clone()));
 
             let path: syn::Path = syn::parse_str(&t.ident.to_string()).unwrap();

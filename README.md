@@ -76,10 +76,12 @@ To make a new release of ocaml-gen and ocaml-gen-derive:
 
 1. Change the CHANGELOG.md to include all unreleased features into the new
    release. Create a new empty "Unreleased" section.
-2. Change the version of `ocaml-gen-derive` in `ocaml-gen/Cargo.toml` to the new
+2. Update the version field in [ocaml-gen/Cargo.toml](./ocaml-gen/Cargo.toml)
+   and [ocaml-gen/derive/Cargo.toml](./ocaml-gen/derive/Cargo.toml).
+3. Change the version of `ocaml-gen-derive` in `ocaml-gen/Cargo.toml` to the new
    release version.
-3. Create a tag with `git tag -m "VERSION" -a "x.y.z"`
-4. Push the tag with `git push --tags`
-5. Refer to
+4. Create a tag with `git tag -m "VERSION" -a "x.y.z"`
+5. Push the tag with `git push --tags`
+6. Refer to
    [cargo-publish](https://doc.rust-lang.org/cargo/commands/cargo-publish.html)
    to update to the public registry.

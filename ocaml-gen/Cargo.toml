@@ -11,7 +11,8 @@ doctest = false
 
 [dependencies]
 const-random.workspace = true
-ocaml-gen-derive = { path = "./derive" }
+# Maintain the same version as ocaml-gen
+ocaml-gen-derive = { path = "./derive", version = "1.0.0" }
 ocaml.workspace = true
 paste.workspace = true
 

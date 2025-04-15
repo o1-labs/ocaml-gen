@@ -85,3 +85,10 @@ To make a new release of ocaml-gen and ocaml-gen-derive:
 6. Refer to
    [cargo-publish](https://doc.rust-lang.org/cargo/commands/cargo-publish.html)
    to update to the public registry.
+   The commands should look like:
+   `cargo publish -p ocaml-gen-derive --manifest-path
+   ocaml-gen/derive/Cargo.toml` followed by `cargo publish -p ocaml-gen
+   --manifest-path ocaml-gen/Cargo.toml`. It is highly recommended to use the
+   extra argument `--dry-run` to try first without actually publishing as
+   publishing on the public registry crates.io is not reversible (except by
+   yanking the version).

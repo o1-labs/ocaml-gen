@@ -8,6 +8,9 @@ repository = "https://github.com/o1-labs/ocaml-gen"
 
 [lib]
 doctest = false
+# Important: do not ask to build a dynamic library.
+# On MacOS arm64, ocaml-rs.v0.2.2 causes build issues.
+crate-type = ["lib", "staticlib"]
 
 [dependencies]
 const-random.workspace = true

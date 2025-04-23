@@ -1,4 +1,5 @@
 #![deny(missing_docs)]
+#![no_std]
 
 //! **This crate is not meant to be imported directly by users**.
 //! You should import [ocaml-gen](https://crates.io/crates/ocaml-gen) instead.
@@ -8,7 +9,11 @@
 //! [ocaml-gen](https://o1-labs.github.io/ocaml-gen/ocaml_gen/index.html)
 //! documentation.
 
+extern crate alloc;
 extern crate proc_macro;
+use alloc::format;
+use alloc::string::{String, ToString};
+use alloc::{vec, vec::Vec};
 use convert_case::{Case, Casing};
 use proc_macro::TokenStream;
 use proc_macro2::{Ident, Span};

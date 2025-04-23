@@ -18,7 +18,7 @@ jobs:
   run_checks:
     strategy:
       matrix:
-        rust_toolchain_version: ["1.79", "1.80", "1.81", "1.82"]
+        rust_toolchain_version: ["1.79", "1.80", "1.81", "1.82", "1.83", "1.84", "1.85"]
         # Follow ocamlgen-test.opam requirements
         # FIXME: currently not available for 5.0.0.
         # It might be related to boxroot dependency, and we would need to bump

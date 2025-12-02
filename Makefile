@@ -1,4 +1,4 @@
-OCAMLFORMAT_VERSION = 0.25.1
+OCAMLFORMAT_VERSION = 0.28.1
 
 setup-ocaml-deps:
 		opam install . -y --deps-only --with-test

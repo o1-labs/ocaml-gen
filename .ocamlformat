@@ -1,9 +1,9 @@
 # Imported from MinaProtocol/mina, commit
 # b26d8f34a1bd634266868aa919ae73ae6d0b8112
-# Version 0.25.1 is selected to be compatible with ocaml 5.0.0
+# Version 0.28.1 is selected to be compatible with ocaml 5.0.0
 # The version used in mina, commit b26d8f34a1bd634266868aa919ae73ae6d0b8112 is
 # 0.20.1
-version=0.25.1
+version=0.28.1
 profile=ocamlformat
 quiet=false
 max-iters=10

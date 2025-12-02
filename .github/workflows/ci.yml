@@ -70,7 +70,7 @@ jobs:
       - name: Enforce Rust and OCaml formatting
         run: |
             eval $(opam env)
-            cargo install cargo-sort
+            cargo install cargo-sort --version 1.0.9
             make check-format
 
       - name: Lint (clippy)

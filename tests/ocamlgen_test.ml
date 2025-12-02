@@ -24,7 +24,7 @@ let test_bytes_get =
 let test_u8_char_get_ascii_code =
   QCheck.(
     Test.make ~name:"Test u8 binding by getting ASCII code" QCheck.char
-      (fun c -> Int32.to_int @@ Bindings.test_get_ascii_code c = int_of_char c) )
+      (fun c -> Int32.to_int @@ Bindings.test_get_ascii_code c = int_of_char c ) )
 
 let () =
   let builtin_types_qcheck_suite =

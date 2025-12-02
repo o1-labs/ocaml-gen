@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Bumped ocaml-rs from `0.22.4` to `1.3.0` so to support OCaml5
+
 ## 1.0.0
 
 - Support Rust up to 1.82 (https://github.com/o1-labs/ocaml-gen/pull/31,

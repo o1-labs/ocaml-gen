@@ -13,6 +13,6 @@ name = "main"
 path = "src/bin/main.rs"
 
 [dependencies]
-ocaml = "0.22.2"
+ocaml = "1.3.0"
 ocaml-gen = { path = "../../ocaml-gen" }
 ocaml-gen-derive = { path = "../../ocaml-gen/derive" }

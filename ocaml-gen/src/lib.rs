@@ -320,11 +320,14 @@ macro_rules! decl_type_alias {
 
 /// Creates a fake generic. This is a necessary hack, at the moment, to declare
 /// types (with the [`decl_type`] macro) that have generic parameters.
+/// Now also implements `ocaml::ToValue` and `ocaml::FromValue` so it can be
+/// used in generic structs.
 #[macro_export]
 macro_rules! decl_fake_generic {
     ($name:ident, $i:expr) => {
         pub struct $name;
 
+        // OCaml type description for this generic
         impl ::ocaml_gen::OCamlDesc for $name {
             fn ocaml_desc(_env: &::ocaml_gen::Env, generics: &[&str]) -> String {
                 format!("'{}", generics[$i])
@@ -332,6 +335,19 @@ macro_rules! decl_fake_generic {
 
             fn unique_id() -> u128 {
                 ::ocaml_gen::const_random!(u128)
+            }
+        }
+
+        // Implement ocaml-rs traits so generic structs compile
+        unsafe impl ::ocaml::ToValue for $name {
+            fn to_value(&self, _rt: &::ocaml::Runtime) -> ::ocaml::Value {
+                unimplemented!("fake generic cannot be instantiated at runtime")
+            }
+        }
+
+        unsafe impl ::ocaml::FromValue for $name {
+            fn from_value(_v: ::ocaml::Value) -> Self {
+                unimplemented!("fake generic cannot be instantiated at runtime")
             }
         }
     };

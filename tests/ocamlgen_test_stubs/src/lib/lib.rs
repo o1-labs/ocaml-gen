@@ -1,4 +1,6 @@
-#[derive(ocaml::IntoValue, ocaml::FromValue, ocaml_gen::Struct)]
+use ocaml::Value;
+
+#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::Struct)]
 pub struct SingleTuple(String);
 
 #[ocaml_gen::func]
@@ -13,7 +15,7 @@ pub fn print(s: SingleTuple) {
     println!("{}", s.0);
 }
 
-#[derive(ocaml::IntoValue, ocaml::FromValue, ocaml_gen::CustomType)]
+#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::CustomType)]
 pub struct Car {
     name: String,
     doors: usize,
@@ -28,8 +30,8 @@ pub fn create_toyota() -> Car {
     }
 }
 
-#[derive(ocaml::IntoValue, ocaml::FromValue, ocaml_gen::Struct)]
-pub struct Package<T> {
+#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::Struct)]
+pub struct Package<T: ocaml::ToValue + ocaml::FromValue> {
     gift: T,
 }
 
@@ -83,6 +85,7 @@ pub fn fn_six_parameters(
 ) -> Car {
     v1
 }
+
 // Test OCamlDesc is implemented for i32
 #[ocaml_gen::func]
 #[ocaml::func]

@@ -15,10 +15,10 @@
  (synopsis "Test library for ocaml-gen")
  (depends
   (dune (>= 3.0))
-  (ocaml (and (>= 4.14) (< 5.0)))
+  (ocaml (>= 4.14))
   (conf-rust (>= 0.1))
   alcotest
   qcheck
-  qcheck-alcotest
- )
-)
+  qcheck-alcotest))
+ 
+

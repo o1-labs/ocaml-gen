@@ -20,10 +20,7 @@ jobs:
       matrix:
         rust_toolchain_version: ["1.79", "1.80", "1.81", "1.82"]
         # Follow ocamlgen-test.opam requirements
-        # FIXME: currently not available for 5.0.0.
-        # It might be related to boxroot dependency, and we would need to bump
-        # up the ocaml-rs dependency
-        ocaml_version: [4.14]
+        ocaml_version: [4.14, 5.2]
         os: ["ubuntu-latest", "ubuntu-24.04-arm"]
     runs-on: ${{ matrix.os }}
     name: Run some basic checks and tests
@@ -73,7 +70,7 @@ jobs:
       - name: Enforce Rust and OCaml formatting
         run: |
             eval $(opam env)
-            cargo install cargo-sort
+            cargo install cargo-sort --version 1.0.9
             make check-format
 
       - name: Lint (clippy)

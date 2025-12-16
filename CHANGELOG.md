@@ -1,6 +1,17 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## Unreleased
 
-- Bumped ocaml-rs from `0.22.4` to `1.3.0` so to support OCaml5
+### Changes
+
+- **Dependencies**: bump ocaml-rs from `0.22.4` to `1.3.0` to support OCaml5
+- **CI**: add stable Rust version to test matrix
+  ([#46](https://github.com/o1-labs/ocaml-gen/pull/46))
 
 ## 1.0.0
 

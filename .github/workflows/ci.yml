@@ -18,7 +18,7 @@ jobs:
   run_checks:
     strategy:
       matrix:
-        rust_toolchain_version: ["1.79", "1.80", "1.81", "1.82"]
+        rust_toolchain_version: ["1.79", "1.80", "1.81", "1.82", "stable"]
         # Follow ocamlgen-test.opam requirements
         ocaml_version: [4.14, 5.2]
         os: ["ubuntu-latest", "ubuntu-24.04-arm"]

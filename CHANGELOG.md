@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dependencies**: bump ocaml-rs from `0.22.4` to `1.3.0` to support OCaml5
 - **CI**: add stable Rust version to test matrix
   ([#46](https://github.com/o1-labs/ocaml-gen/pull/46))
+- **CI**: add macos-latest runner, drop Rust versions below 1.81
+  ([#47](https://github.com/o1-labs/ocaml-gen/pull/47))
 
 ## 1.0.0
 

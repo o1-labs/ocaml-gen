@@ -1,0 +1,31 @@
+name: Build Ubuntu
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  RUSTFLAGS: -Coverflow-checks=y -Cdebug-assertions=y
+  CARGO_INCREMENTAL: 1
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        rust_toolchain_version: ["1.81", "1.82", "stable"]
+        ocaml_version: [4.14, 5.2]
+        os: ["ubuntu-latest", "ubuntu-24.04-arm"]
+    runs-on: ${{ matrix.os }}
+    name: Rust ${{ matrix.rust_toolchain_version }}, OCaml ${{ matrix.ocaml_version }}, ${{ matrix.os }}
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+
+      - name: Build and test
+        uses: ./.github/actions/build-and-test
+        with:
+          rust_toolchain_version: ${{ matrix.rust_toolchain_version }}
+          ocaml_version: ${{ matrix.ocaml_version }}

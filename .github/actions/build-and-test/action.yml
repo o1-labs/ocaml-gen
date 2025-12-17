@@ -69,4 +69,4 @@ runs:
     - name: Check that up-to-date bindings are checked in
       shell: bash
       run: |
-        git diff --exit-code ":(exclude)rust-toolchain"
+        git diff --exit-code

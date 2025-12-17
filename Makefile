@@ -19,12 +19,12 @@ help: ## Ask for help!
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 check-format: ## Check the code formatting
-		cargo +nightly fmt -- --check
+		rustup run nightly cargo fmt -- --check
 		cargo sort --check
 		dune build @fmt
 
 format: ## Format the code
-		cargo +nightly fmt
+		rustup run nightly cargo fmt
 		cargo sort
 
 .PHONY: build check-format format help lint release setup-ocaml-deps

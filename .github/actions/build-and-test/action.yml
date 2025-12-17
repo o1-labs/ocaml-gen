@@ -1,0 +1,72 @@
+name: Build and Test
+description: Setup environment and run tests
+
+inputs:
+  rust_toolchain_version:
+    description: Rust toolchain version
+    required: true
+  ocaml_version:
+    description: OCaml version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Rust toolchain ${{ inputs.rust_toolchain_version }}
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        toolchain: ${{ inputs.rust_toolchain_version }}
+        components: clippy
+
+    - name: Install Rust nightly for formatting
+      shell: bash
+      run: rustup toolchain install nightly --component rustfmt,clippy
+
+    - name: Set macOS linker flags
+      if: runner.os == 'macOS'
+      shell: bash
+      run: echo "RUSTFLAGS=$RUSTFLAGS -C link-args=-Wl,-undefined,dynamic_lookup" >> $GITHUB_ENV
+
+    - name: Setup OCaml ${{ inputs.ocaml_version }}
+      uses: ocaml/setup-ocaml@v3
+      with:
+        ocaml-compiler: ${{ inputs.ocaml_version }}
+
+    - name: Setup OCaml dependencies
+      shell: bash
+      run: |
+        eval $(opam env)
+        make setup-ocaml-deps
+
+    - name: List OCaml and Rust versions
+      shell: bash
+      run: |
+        eval $(opam env)
+        echo "OCaml version $(ocamlc --version) (location = $(which ocamlc))"
+        echo "OPAM version $(opam --version) (location = $(which opam))"
+        echo "Rust version $(rustc --version) (location = $(which rustc))"
+
+    - name: Enforce Rust and OCaml formatting
+      shell: bash
+      run: |
+        eval $(opam env)
+        cargo install cargo-sort --version 1.0.9
+        make check-format
+
+    - name: Lint (clippy)
+      shell: bash
+      run: |
+        eval $(opam env)
+        make lint
+
+    - name: Build and run tests
+      shell: bash
+      run: |
+        eval $(opam env)
+        dune build
+        dune runtest
+
+    - name: Check that up-to-date bindings are checked in
+      shell: bash
+      run: |
+        git diff --exit-code

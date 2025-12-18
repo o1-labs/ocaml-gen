@@ -15,7 +15,7 @@ jobs:
   build:
     strategy:
       matrix:
-        rust_toolchain_version: ["1.81", "1.82", "stable"]
+        rust_toolchain_version: ["1.81", "stable", "beta"]
         # OCaml 5 not supported on macOS yet
         ocaml_version: [4.14]
     runs-on: macos-latest
